@@ -5,28 +5,28 @@
         Height="600" Width="450"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="{StaticResource BackgroundBrush}">
+        Background="White">
 
-    <Border Style="{StaticResource CardStyle}" Margin="40">
+    <Border Margin="40" BorderBrush="LightGray" BorderThickness="1" CornerRadius="8" Background="White">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel VerticalAlignment="Center">
                 <!-- Заголовок -->
                 <TextBlock Text=" MenuPlanner" 
                            FontSize="28" 
                            FontWeight="Bold"
-                           Foreground="{StaticResource PrimaryBrush}"
+                           Foreground="#2196F3"
                            HorizontalAlignment="Center"
                            Margin="0,0,0,10"/>
 
                 <TextBlock Text="Регистрация" 
                            FontSize="20"
-                           Foreground="{StaticResource TextSecondaryBrush}"
+                           Foreground="Gray"
                            HorizontalAlignment="Center"
                            Margin="0,0,0,30"/>
 
                 <!-- ФИО -->
                 <TextBlock Text="ФИО *" 
-                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Foreground="Black"
                            Margin="0,0,0,5"/>
                 <TextBox x:Name="txtFullName" 
                          Margin="0,0,0,15"
@@ -34,7 +34,7 @@
 
                 <!-- Логин -->
                 <TextBlock Text="Логин *" 
-                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Foreground="Black"
                            Margin="0,0,0,5"/>
                 <TextBox x:Name="txtLogin" 
                          Margin="0,0,0,15"
@@ -42,7 +42,7 @@
 
                 <!-- Роль -->
                 <TextBlock Text="Должность *" 
-                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Foreground="Black"
                            Margin="0,0,0,5"/>
                 <ComboBox x:Name="cmbRole" 
           Margin="0,0,0,15"
@@ -56,7 +56,7 @@
 
                 <!-- Пароль -->
                 <TextBlock Text="Пароль *" 
-                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Foreground="Black"
                            Margin="0,0,0,5"/>
                 <PasswordBox x:Name="txtPassword" 
                              Margin="0,0,0,15"
@@ -64,7 +64,7 @@
 
                 <!-- Подтверждение пароля -->
                 <TextBlock Text="Подтвердите пароль *" 
-                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Foreground="Black"
                            Margin="0,0,0,5"/>
                 <PasswordBox x:Name="txtPasswordConfirm" 
                              Margin="0,0,0,25"
@@ -79,9 +79,9 @@
 
                 <!-- Ссылка на вход -->
                 <TextBlock HorizontalAlignment="Center" Margin="0,15,0,0">
-    <Run Text="Уже есть аккаунт? " Foreground="{StaticResource TextSecondaryBrush}"/>
+    <Run Text="Уже есть аккаунт? " Foreground="Gray"/>
     <Run Text="Войти" 
-         Foreground="{StaticResource PrimaryBrush}"
+         Foreground="#2196F3"
          TextDecorations="Underline"
          Cursor="Hand"
          MouseLeftButtonUp="LoginLink_MouseLeftButtonUp"/>
@@ -89,7 +89,7 @@
 
                 <!-- Сообщение -->
                 <TextBlock x:Name="txtMessage" 
-                           Foreground="{StaticResource ErrorBrush}"
+                           Foreground="Red"
                            HorizontalAlignment="Center"
                            Margin="0,15,0,0"
                            TextWrapping="Wrap"

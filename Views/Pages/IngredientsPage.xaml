@@ -36,7 +36,7 @@
                     Click="BtnReset_Click"/>
         </StackPanel>
 
-        <!-- DataGrid - БЕЗ СТИЛЕЙ, БЕЗ ВИРТУАЛИЗАЦИИ -->
+        <!-- DataGrid - БЕЗ ВИРТУАЛИЗАЦИИ -->
         <DataGrid x:Name="dgIngredients" 
                   Grid.Row="2"
                   AutoGenerateColumns="False"
@@ -47,7 +47,9 @@
                   BorderThickness="1"
                   GridLinesVisibility="None"
                   HeadersVisibility="Column"
-                  RowHeight="35">
+                  RowHeight="35"
+                  VirtualizingPanel.IsVirtualizing="False"
+                  ScrollViewer.CanContentScroll="False">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>

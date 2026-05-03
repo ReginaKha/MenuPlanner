@@ -5,27 +5,27 @@
         Height="600" Width="400"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="{StaticResource BackgroundBrush}">
+        Background="White">
 
-    <Border Style="{StaticResource CardStyle}" Margin="40">
+    <Border Margin="40" BorderBrush="LightGray" BorderThickness="1" CornerRadius="8" Background="White">
         <StackPanel VerticalAlignment="Center">
             <!-- Логотип/Заголовок -->
             <TextBlock Text="🍽 MenuPlanner" 
                        FontSize="32" 
                        FontWeight="Bold"
-                       Foreground="{StaticResource PrimaryBrush}"
+                       Foreground="#2196F3"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,30"/>
 
             <TextBlock Text="Вход в систему" 
                        FontSize="18"
-                       Foreground="{StaticResource TextSecondaryBrush}"
+                       Foreground="Gray"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,40"/>
 
             <!-- Логин -->
             <TextBlock Text="Логин" 
-                       Foreground="{StaticResource TextPrimaryBrush}"
+                       Foreground="Black"
                        Margin="0,0,0,5"/>
             <TextBox x:Name="txtLogin" 
                      Margin="0,0,0,20"
@@ -33,7 +33,7 @@
 
             <!-- Пароль -->
             <TextBlock Text="Пароль" 
-                       Foreground="{StaticResource TextPrimaryBrush}"
+                       Foreground="Black"
                        Margin="0,0,0,5"/>
             <PasswordBox x:Name="txtPassword" 
                          Margin="0,0,0,25"
@@ -50,23 +50,26 @@
             <TextBlock Text="Забыли пароль?" 
            HorizontalAlignment="Center" 
            Margin="0,10,0,0"
-           Foreground="{StaticResource PrimaryBrush}"
+           Foreground="#2196F3"
            TextDecorations="Underline"
            Cursor="Hand"
            MouseLeftButtonUp="ForgotPassword_MouseLeftButtonUp"/>
 
             <!-- Сообщение об ошибке -->
             <TextBlock x:Name="txtErrorMessage" 
-                       Foreground="{StaticResource ErrorBrush}"
+                       Foreground="Red"
                        HorizontalAlignment="Center"
                        Margin="0,15,0,0"
                        TextWrapping="Wrap"
                        Visibility="Collapsed"/>
             <!-- После txtErrorMessage, перед закрывающим </StackPanel> -->
             <Button Content="🔹 Регистрация" 
-        Style="{StaticResource OutlinedButtonStyle}"
         Margin="0,10,0,0"
-        Click="BtnGoToRegister_Click"/>
+        Click="BtnGoToRegister_Click"
+        Background="Transparent"
+        BorderBrush="#2196F3"
+        BorderThickness="1"
+        Foreground="#2196F3"/>
         </StackPanel>
     </Border>
 </Window>
