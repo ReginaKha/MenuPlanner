@@ -4,7 +4,7 @@
         Title="MenuPlanner"
         Height="800" Width="1200"
         WindowState="Maximized"
-        Background="{StaticResource BackgroundBrush}">
+        Background="White">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -16,8 +16,8 @@
 
         <!-- ===== ЛЕВОЕ МЕНЮ ===== -->
         <Border Grid.Column="0" 
-                Background="{StaticResource SurfaceBrush}"
-                BorderBrush="{StaticResource SurfaceBorderBrush}"
+                Background="#F5F5F5"
+                BorderBrush="#E0E0E0"
                 BorderThickness="0,0,1,0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -32,16 +32,16 @@
                         <TextBlock Text="🍽 MenuPlanner" 
                                    FontSize="20" 
                                    FontWeight="Bold"
-                                   Foreground="{StaticResource PrimaryBrush}"/>
+                                   Foreground="#2196F3"/>
                         <TextBlock x:Name="txtUserName" 
                                    Text="Иван Петров" 
                                    FontSize="14"
-                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Foreground="Gray"
                                    Margin="0,5,0,0"/>
                         <TextBlock x:Name="txtUserRole" 
                                    Text="Повар" 
                                    FontSize="12"
-                                   Foreground="{StaticResource TextSecondaryBrush}"/>
+                                   Foreground="Gray"/>
                     </StackPanel>
                 </Border>
 
@@ -52,94 +52,107 @@
                         <Button Content="📊 Главная" 
                                 Tag="Dashboard"
                                 Click="MenuButton_Click"
-                                Style="{StaticResource {x:Type Button}}"
                                 HorizontalContentAlignment="Left"
-                                Padding="20,12"/>
+                                Padding="20,12"
+                                Background="Transparent"
+                                BorderThickness="0"/>
 
                         <!-- Ингредиенты (все роли) -->
                         <Button Content="🥕 Ингредиенты" 
                                 Tag="Ingredients"
                                 Click="MenuButton_Click"
-                                Style="{StaticResource {x:Type Button}}"
                                 HorizontalContentAlignment="Left"
-                                Padding="20,12"/>
+                                Padding="20,12"
+                                Background="Transparent"
+                                BorderThickness="0"/>
 
                         <!-- Рецепты (все, кроме повара - только просмотр) -->
                         <Button Content="📖 Рецепты" 
                                 Tag="Recipes"
                                 Click="MenuButton_Click"
-                                Style="{StaticResource {x:Type Button}}"
                                 HorizontalContentAlignment="Left"
-                                Padding="20,12"/>
+                                Padding="20,12"
+                                Background="Transparent"
+                                BorderThickness="0"/>
 
                         <!-- Меню (шеф-повар) -->
                         <Button x:Name="btnMenu"
                                 Content="📅 Меню" 
                                 Tag="Menu"
                                 Click="MenuButton_Click"
-                                Style="{StaticResource {x:Type Button}}"
                                 HorizontalContentAlignment="Left"
                                 Padding="20,12"
-                                Visibility="Collapsed"/>
+                                Visibility="Collapsed"
+                                Background="Transparent"
+                                BorderThickness="0"/>
 
                         <!-- Склад (кладовщик) -->
                         <Button x:Name="btnInventory"
                                 Content="📦 Склад" 
                                 Tag="Inventory"
                                 Click="MenuButton_Click"
-                                Style="{StaticResource {x:Type Button}}"
                                 HorizontalContentAlignment="Left"
                                 Padding="20,12"
-                                Visibility="Collapsed"/>
+                                Visibility="Collapsed"
+                                Background="Transparent"
+                                BorderThickness="0"/>
 
                         <!-- Заявки (кладовщик, шеф) -->
                         <Button x:Name="btnPurchase"
                                 Content="🛒 Заявки" 
                                 Tag="PurchaseRequests"
                                 Click="MenuButton_Click"
-                                Style="{StaticResource {x:Type Button}}"
                                 HorizontalContentAlignment="Left"
                                 Padding="20,12"
-                                Visibility="Collapsed"/>
+                                Visibility="Collapsed"
+                                Background="Transparent"
+                                BorderThickness="0"/>
 
                         <!-- Аналитика (бухгалтер, шеф, управляющий) -->
                         <Button x:Name="btnAnalytics"
                                 Content="📈 Аналитика" 
                                 Tag="Analytics"
                                 Click="MenuButton_Click"
-                                Style="{StaticResource {x:Type Button}}"
                                 HorizontalContentAlignment="Left"
                                 Padding="20,12"
-                                Visibility="Collapsed"/>
+                                Visibility="Collapsed"
+                                Background="Transparent"
+                                BorderThickness="0"/>
 
                         <!-- Пользователи (админ) -->
                         <Button x:Name="btnUsers"
                                 Content="👥 Пользователи" 
                                 Tag="Users"
                                 Click="MenuButton_Click"
-                                Style="{StaticResource {x:Type Button}}"
                                 HorizontalContentAlignment="Left"
                                 Padding="20,12"
-                                Visibility="Collapsed"/>
+                                Visibility="Collapsed"
+                                Background="Transparent"
+                                BorderThickness="0"/>
                     </StackPanel>
                 </ScrollViewer>
 
                 <!-- Низ: настройки и выход -->
-                <Border Grid.Row="2" Padding="20" BorderBrush="{StaticResource SurfaceBorderBrush}" BorderThickness="0,1,0,0">
+                <Border Grid.Row="2" Padding="20" BorderBrush="#E0E0E0" BorderThickness="0,1,0,0">
                     <StackPanel>
                         <Button Content="⚙️ Настройки" 
                                 Tag="Settings"
                                 Click="MenuButton_Click"
-                                Style="{StaticResource OutlinedButtonStyle}"
                                 HorizontalContentAlignment="Left"
                                 Padding="20,10"
-                                Margin="0,0,0,10"/>
+                                Margin="0,0,0,10"
+                                Background="Transparent"
+                                BorderBrush="#2196F3"
+                                BorderThickness="1"
+                                Foreground="#2196F3"/>
 
                         <Button Content="🚪 Выйти" 
                                 Click="BtnLogout_Click"
-                                Style="{StaticResource DangerButtonStyle}"
                                 HorizontalContentAlignment="Left"
-                                Padding="20,10"/>
+                                Padding="20,10"
+                                Background="#F44336"
+                                Foreground="White"
+                                BorderThickness="0"/>
                     </StackPanel>
                 </Border>
             </Grid>
@@ -154,8 +167,8 @@
 
             <!-- Верхняя панель -->
             <Border Grid.Row="0" 
-                    Background="{StaticResource SurfaceBrush}"
-                    BorderBrush="{StaticResource SurfaceBorderBrush}"
+                    Background="#F5F5F5"
+                    BorderBrush="#E0E0E0"
                     BorderThickness="0,0,0,1">
                 <Grid Margin="20,0">
                     <Grid.ColumnDefinitions>
@@ -168,20 +181,23 @@
                                Text="Главная" 
                                FontSize="24"
                                FontWeight="SemiBold"
-                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Foreground="Black"
                                VerticalAlignment="Center"/>
 
                     <!-- Переключатель темы и дата -->
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                         <TextBlock Text="{Binding CurrentDate, StringFormat={}{0:dd.MM.yyyy}}" 
-                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Foreground="Gray"
                                    VerticalAlignment="Center"
                                    Margin="0,0,20,0"/>
 
                         <Button Content="🌓" 
         Width="40" Height="40"
         Click="BtnToggleTheme_Click"
-        ToolTip="Переключить тему"/>
+        ToolTip="Переключить тему"
+        Background="Transparent"
+        BorderBrush="Gray"
+        BorderThickness="1"/>
                     </StackPanel>
                 </Grid>
             </Border>
@@ -190,7 +206,7 @@
             <Frame x:Name="MainFrame" 
                    Grid.Row="1" 
                    NavigationUIVisibility="Hidden"
-                   Background="{StaticResource BackgroundBrush}"/>
+                   Background="White"/>
         </Grid>
     </Grid>
 </Window>

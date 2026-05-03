@@ -5,6 +5,8 @@ obj/
 *.exe
 *.dll
 *.pdb
+*.nupkg
+*.snupkg
 *.userprefs
 
 # Dependencies
@@ -13,6 +15,36 @@ packages/
 # Logs
 *.log
 
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Visual Studio files
+.vs/
+*.VC.db
+*.VC.VC.opendb
+
+# Windows files
+Thumbs.db
+ehthumbs.db
+Icon?
+desktop.ini
+
+# Environment variables
+.env
+.env.local
+*.env.*
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
 # OS generated files
 .DS_Store
 Thumbs.db
