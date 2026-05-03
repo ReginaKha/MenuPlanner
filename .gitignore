@@ -10,32 +10,32 @@ obj/
 # Dependencies
 packages/
 node_modules/
+vendor/
 
 # Logs
 *.log
 
+# OS generated files
+.DS_Store
+Thumbs.db
+
 # User-specific files
 .vs/
+.idea/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+
+# Cache
+.cache/
+*.cache
 
 # Environment
 .env
 .env.local
 *.env.*
 
-# OS generated files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# IDE
-.vscode/
-.idea/
-
-# Temp files
-*.tmp
-*~
+# Test results
+TestResults/
 ```
