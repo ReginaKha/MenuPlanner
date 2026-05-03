@@ -195,7 +195,10 @@ namespace MenuPlanner.Views
                 .Where(ri => ri.RecipeId == _editingRecipe.Id)
                 .ToList();
 
-            _context.RecipeIngredients.RemoveRange(existingIngredients);
+            foreach (var ingredient in existingIngredients)
+            {
+                _context.RecipeIngredients.Remove(ingredient);
+            }
 
             // Добавляем новые
             foreach (var item in _recipeIngredients)
