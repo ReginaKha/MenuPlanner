@@ -115,7 +115,7 @@ namespace MenuPlanner.Views.Pages
         {
             try
             {
-                if (dgIngredients == null) return;
+                if (dgIngredients == null || _allIngredients == null) return;
 
                 string search = (txtSearch?.Text ?? "").ToLower().Trim();
                 int? catId = (cmbCategory?.SelectedItem as ComboBoxItem)?.Tag as int?;
@@ -135,13 +135,17 @@ namespace MenuPlanner.Views.Pages
                     return matchName && matchCat;
                 }).ToList();
 
-                // ✅ НИКОГДА не ставим null!
-                dgIngredients.ItemsSource = filtered;
+                // Всегда устанавливаем коллекцию (даже если пустая)
+                dgIngredients.ItemsSource = filtered ?? new List<Ingredients>();
+                
+                // Опционально: показываем количество результатов
+                // statusText.Text = $"Найдено: {filtered.Count}";
             }
-            catch
+            catch (Exception ex)
             {
-                // При любой ошибке показываем все данные
-                dgIngredients.ItemsSource = _allIngredients;
+                // При любой ошибке показываем все данные и логируем ошибку
+                System.Diagnostics.Debug.WriteLine($"Ошибка фильтрации: {ex.Message}");
+                dgIngredients.ItemsSource = _allIngredients ?? new List<Ingredients>();
             }
         }
 
