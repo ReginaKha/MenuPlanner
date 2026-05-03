@@ -1,0 +1,101 @@
+﻿<Window x:Class="MenuPlanner.Views.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Регистрация - MenuPlanner"
+        Height="600" Width="450"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundBrush}">
+
+    <Border Style="{StaticResource CardStyle}" Margin="40">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel VerticalAlignment="Center">
+                <!-- Заголовок -->
+                <TextBlock Text=" MenuPlanner" 
+                           FontSize="28" 
+                           FontWeight="Bold"
+                           Foreground="{StaticResource PrimaryBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock Text="Регистрация" 
+                           FontSize="20"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,30"/>
+
+                <!-- ФИО -->
+                <TextBlock Text="ФИО *" 
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Margin="0,0,0,5"/>
+                <TextBox x:Name="txtFullName" 
+                         Margin="0,0,0,15"
+                         Tag="Иванов Иван Иванович"/>
+
+                <!-- Логин -->
+                <TextBlock Text="Логин *" 
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Margin="0,0,0,5"/>
+                <TextBox x:Name="txtLogin" 
+                         Margin="0,0,0,15"
+                         Tag="login"/>
+
+                <!-- Роль -->
+                <TextBlock Text="Должность *" 
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Margin="0,0,0,5"/>
+                <ComboBox x:Name="cmbRole" 
+          Margin="0,0,0,15"
+          Height="40"
+          MaxDropDownHeight="300"
+          IsEditable="False"
+          StaysOpenOnEdit="False"
+          Focusable="True"
+          IsTextSearchEnabled="True">
+                </ComboBox>
+
+                <!-- Пароль -->
+                <TextBlock Text="Пароль *" 
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Margin="0,0,0,5"/>
+                <PasswordBox x:Name="txtPassword" 
+                             Margin="0,0,0,15"
+                             Height="40"/>
+
+                <!-- Подтверждение пароля -->
+                <TextBlock Text="Подтвердите пароль *" 
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Margin="0,0,0,5"/>
+                <PasswordBox x:Name="txtPasswordConfirm" 
+                             Margin="0,0,0,25"
+                             Height="40"/>
+
+                <!-- Кнопка регистрации -->
+                <Button Content="Зарегистрироваться" 
+                        Height="44"
+                        FontSize="16"
+                        Margin="0,0,0,15"
+                        Click="BtnRegister_Click"/>
+
+                <!-- Ссылка на вход -->
+                <TextBlock HorizontalAlignment="Center" Margin="0,15,0,0">
+    <Run Text="Уже есть аккаунт? " Foreground="{StaticResource TextSecondaryBrush}"/>
+    <Run Text="Войти" 
+         Foreground="{StaticResource PrimaryBrush}"
+         TextDecorations="Underline"
+         Cursor="Hand"
+         MouseLeftButtonUp="LoginLink_MouseLeftButtonUp"/>
+                </TextBlock>
+
+                <!-- Сообщение -->
+                <TextBlock x:Name="txtMessage" 
+                           Foreground="{StaticResource ErrorBrush}"
+                           HorizontalAlignment="Center"
+                           Margin="0,15,0,0"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           Visibility="Collapsed"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</Window>
