@@ -115,37 +115,87 @@ namespace MenuPlanner.Views.Pages
         {
             try
             {
-                if (dgIngredients == null || _allIngredients == null) return;
-
-                string search = (txtSearch?.Text ?? "").ToLower().Trim();
-                int? catId = (cmbCategory?.SelectedItem as ComboBoxItem)?.Tag as int?;
-
-                var filtered = _allIngredients.Where(i =>
+                // Проверка на null основных элементов
+                if (dgIngredients == null) return;
+                if (_allIngredients == null)
                 {
-                    if (i == null) return false;
+                    dgIngredients.ItemsSource = new List<Ingredients>();
+                    return;
+                }
 
-                    // Поиск по названию
-                    bool matchName = string.IsNullOrEmpty(search) ||
-                                    (!string.IsNullOrEmpty(i.Name) && i.Name.ToLower().Contains(search));
+                // Получаем поисковый запрос безопасно
+                string search = "";
+                if (txtSearch != null && !string.IsNullOrEmpty(txtSearch.Text))
+                {
+                    search = txtSearch.Text.ToLower().Trim();
+                }
 
-                    // Фильтр по категории
-                    bool matchCat = !catId.HasValue ||
-                                   (i.CategoryId.HasValue && i.CategoryId == catId.Value);
+                // Получаем выбранную категорию безопасно
+                int? catId = null;
+                if (cmbCategory != null && cmbCategory.SelectedItem is ComboBoxItem selectedItem && selectedItem.Tag is int tagValue)
+                {
+                    catId = tagValue;
+                }
 
-                    return matchName && matchCat;
-                }).ToList();
+                // Фильтруем список
+                var filtered = new List<Ingredients>();
+                foreach (var ingredient in _allIngredients)
+                {
+                    // Пропускаем null элементы
+                    if (ingredient == null) continue;
 
-                // Всегда устанавливаем коллекцию (даже если пустая)
-                dgIngredients.ItemsSource = filtered ?? new List<Ingredients>();
-                
-                // Опционально: показываем количество результатов
-                // statusText.Text = $"Найдено: {filtered.Count}";
+                    // Проверка по названию
+                    bool matchName = true;
+                    if (!string.IsNullOrEmpty(search))
+                    {
+                        if (string.IsNullOrEmpty(ingredient.Name))
+                        {
+                            matchName = false;
+                        }
+                        else
+                        {
+                            matchName = ingredient.Name.ToLower().Contains(search);
+                        }
+                    }
+
+                    // Проверка по категории
+                    bool matchCat = true;
+                    if (catId.HasValue)
+                    {
+                        if (!ingredient.CategoryId.HasValue)
+                        {
+                            matchCat = false;
+                        }
+                        else
+                        {
+                            matchCat = ingredient.CategoryId.Value == catId.Value;
+                        }
+                    }
+
+                    // Добавляем если подходит под оба критерия
+                    if (matchName && matchCat)
+                    {
+                        filtered.Add(ingredient);
+                    }
+                }
+
+                // Устанавливаем результат (всегда, даже если пусто)
+                dgIngredients.ItemsSource = filtered;
             }
             catch (Exception ex)
             {
-                // При любой ошибке показываем все данные и логируем ошибку
+                // При ошибке показываем все данные и выводим ошибку в debug
                 System.Diagnostics.Debug.WriteLine($"Ошибка фильтрации: {ex.Message}");
-                dgIngredients.ItemsSource = _allIngredients ?? new List<Ingredients>();
+                System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
+                
+                if (dgIngredients != null && _allIngredients != null)
+                {
+                    dgIngredients.ItemsSource = _allIngredients;
+                }
+                else
+                {
+                    dgIngredients.ItemsSource = new List<Ingredients>();
+                }
             }
         }
 
