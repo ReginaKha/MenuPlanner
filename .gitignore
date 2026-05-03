@@ -11,41 +11,42 @@ __pycache__/
 *.a
 
 # Dependencies
-.venv/
 venv/
+.venv/
 node_modules/
+.julia/
+zig*/
 target/
 .gradle/
 .mypy_cache/
 .pytest_cache/
+.npm/
+.yarn/
+
+# Build outputs
 dist/
 build/
+coverage/
+htmlcov/
+*.egg-info/
 
-# Logs and temp files
-*.log
-*.tmp
-*.swp
-*.swo
-
-# Environment
-.env
-.env.local
-.env.*
-
-# Editors
+# Editors and IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
+*.tmp
+
+# Logs
+*.log
+*.out
 
 # System files
 .DS_Store
 Thumbs.db
-
-# Coverage
-coverage/
-htmlcov/
-.coverage
+.env
+.env.local
+*.env.*
 
 # Compressed files
 *.zip
