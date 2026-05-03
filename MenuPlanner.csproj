@@ -70,6 +70,12 @@
     <Compile Include="Views\AddIngredientWindow.xaml.cs">
       <DependentUpon>AddIngredientWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddRecipeWindow.xaml.cs">
+      <DependentUpon>AddRecipeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectIngredientWindow.xaml.cs">
+      <DependentUpon>SelectIngredientWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\AnalyticsPage.xaml.cs">
       <DependentUpon>AnalyticsPage.xaml</DependentUpon>
     </Compile>
@@ -101,6 +107,14 @@
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AddIngredientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddRecipeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectIngredientWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

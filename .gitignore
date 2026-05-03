@@ -5,52 +5,37 @@ obj/
 *.exe
 *.dll
 *.pdb
-*.nupkg
-*.snupkg
 *.userprefs
 
 # Dependencies
 packages/
+node_modules/
 
 # Logs
 *.log
 
 # User-specific files
-*.user
-*.userosscache
-*.suo
-*.userprefs
-
-# Visual Studio files
 .vs/
-*.VC.db
-*.VC.VC.opendb
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
 
-# Windows files
-Thumbs.db
-ehthumbs.db
-Icon?
-desktop.ini
-
-# Environment variables
+# Environment
 .env
 .env.local
 *.env.*
 
-# IDE
-.idea/
-*.swp
-*.swo
-
-# Temporary files
-*.tmp
-*.temp
 # OS generated files
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Visual Studio files
-.vs/
-*.user
-*.suo
+# IDE
+.vscode/
+.idea/
+
+# Temp files
+*.tmp
+*~
 ```
