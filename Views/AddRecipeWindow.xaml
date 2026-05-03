@@ -1,0 +1,65 @@
+<Window x:Class="MenuPlanner.Views.AddRecipeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Рецепт" Width="800" Height="600"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Основная информация -->
+                <TextBlock Text="Название *" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="txtName" Height="35" Margin="0,0,0,15"/>
+
+                <TextBlock Text="Категория" FontWeight="Bold" Margin="0,0,0,5"/>
+                <ComboBox x:Name="cmbCategory" Height="35" Margin="0,0,0,15" DisplayMemberPath="Name"/>
+
+                <TextBlock Text="Выход (порции)" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBox x:Name="txtYieldPortions" Height="35" Margin="0,0,0,15" PreviewTextInput="TxtNumber_PreviewTextInput"/>
+
+                <TextBlock Text="Статус" FontWeight="Bold" Margin="0,0,0,5"/>
+                <ComboBox x:Name="cmbStatus" Height="35" Margin="0,0,0,15">
+                    <ComboBoxItem Content="Активен" IsSelected="True"/>
+                    <ComboBoxItem Content="Архив"/>
+                    <ComboBoxItem Content="Черновик"/>
+                </ComboBox>
+
+                <!-- Ингредиенты рецепта -->
+                <TextBlock Text="Ингредиенты" FontWeight="Bold" Margin="0,10,0,5"/>
+                <Border BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10">
+                    <DataGrid x:Name="dgRecipeIngredients" 
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              IsReadOnly="True"
+                              Height="150"
+                              Background="White">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Ингредиент" Binding="{Binding IngredientName}" Width="200"/>
+                            <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="80"/>
+                            <DataGridTextColumn Header="Ед." Binding="{Binding Unit}" Width="80"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                    <Button Content="+ Добавить ингредиент" Width="160" Height="30"
+                            Click="BtnAddIngredient_Click" Background="#FF6D00" Foreground="White" BorderThickness="0"/>
+                    <Button Content="Удалить" Width="100" Height="30" Margin="10,0,0,0"
+                            Click="BtnRemoveIngredient_Click" Background="#F44336" Foreground="White" BorderThickness="0"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Отмена" Width="100" Height="35" Margin="0,0,10,0" 
+                    Click="BtnCancel_Click" Background="#757575" Foreground="White"/>
+            <Button Content="Сохранить" Width="100" Height="35" 
+                    Click="BtnSave_Click" Background="#FF6D00" Foreground="White"/>
+        </StackPanel>
+    </Grid>
+</Window>
