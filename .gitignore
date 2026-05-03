@@ -7,6 +7,7 @@ obj/
 *.pdb
 *.nupkg
 *.snupkg
+*.userprefs
 
 # Dependencies
 packages/
@@ -44,4 +45,12 @@ desktop.ini
 # Temporary files
 *.tmp
 *.temp
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
 ```
