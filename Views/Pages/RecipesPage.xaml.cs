@@ -196,9 +196,6 @@ namespace MenuPlanner.Views.Pages
                     }
                 }
 
-                dgRecipes.VirtualizingPanel.IsVirtualizing = false;
-                dgRecipes.ScrollViewer.CanContentScroll = false;
-
                 dgRecipes.ItemsSource = filtered;
             }
             catch (Exception ex)

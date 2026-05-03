@@ -61,8 +61,6 @@
                   GridLinesVisibility="None"
                   HeadersVisibility="Column"
                   RowHeight="35"
-                  VirtualizingPanel.IsVirtualizing="False"
-                  ScrollViewer.CanContentScroll="False"
                   MouseDoubleClick="DgRecipes_MouseDoubleClick"
                   PreviewKeyDown="DgRecipes_PreviewKeyDown">
 
