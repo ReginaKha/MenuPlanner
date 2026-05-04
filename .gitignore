@@ -1,12 +1,6 @@
 ```
-# Build artifacts
-*.o
-*.obj
-*.exe
-*.dll
-*.so
-*.a
-*.out
+# Database related
+*.sql
 
 # Dependencies
 node_modules/
@@ -20,22 +14,21 @@ build/
 target/
 .gradle/
 
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-
 # Logs and temp files
 *.log
 *.tmp
+*.swp
 
 # Environment
 .env
 .env.local
 *.env.*
 
-# OS specific
+# Editors
+.vscode/
+.idea/
+
+# OS
 .DS_Store
 Thumbs.db
 
