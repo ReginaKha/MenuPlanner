@@ -41,7 +41,7 @@ namespace MenuPlanner.Views
                 {
                     var cat = categories.FirstOrDefault(c => c.Name == _editingRecipe.Category);
                     if (cat != null)
-                        cmbCategory.SelectedItem = cat;
+                        cmbCategory.SelectedValue = cat.Id;
                 }
 
                 // Устанавливаем статус
@@ -88,11 +88,23 @@ namespace MenuPlanner.Views
 
             dgRecipeIngredients.ItemsSource = null;
             dgRecipeIngredients.ItemsSource = _recipeIngredients;
+            
+            // Обновляем расчет стоимости
+            CalculateCost();
         }
 
         private void TxtNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !int.TryParse(e.Text, out _);
+            // Разрешаем ввод только цифр для поля порций
+            if (sender == txtYieldPortions)
+            {
+                e.Handled = !int.TryParse(e.Text, out _);
+            }
+            // Для поля количества разрешаем цифры и точку/запятую
+            else if (sender is TextBox tb && tb.Name == "txtQuantity")
+            {
+                e.Handled = !decimal.TryParse(e.Text, out _) && e.Text != "." && e.Text != ",";
+            }
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e) => DialogResult = false;
@@ -125,6 +137,9 @@ namespace MenuPlanner.Views
 
                 dgRecipeIngredients.ItemsSource = null;
                 dgRecipeIngredients.ItemsSource = _recipeIngredients;
+                
+                // Обновляем расчет стоимости
+                CalculateCost();
             }
         }
 
@@ -135,6 +150,9 @@ namespace MenuPlanner.Views
                 _recipeIngredients.Remove(item);
                 dgRecipeIngredients.ItemsSource = null;
                 dgRecipeIngredients.ItemsSource = _recipeIngredients;
+                
+                // Обновляем расчет стоимости
+                CalculateCost();
             }
         }
 
@@ -213,6 +231,33 @@ namespace MenuPlanner.Views
             }
 
             _context.SaveChanges();
+        }
+
+        private void CalculateCost()
+        {
+            decimal totalCost = 0;
+
+            foreach (var item in _recipeIngredients)
+            {
+                var ingredient = _context.Ingredients.FirstOrDefault(i => i.Id == item.IngredientId);
+                if (ingredient != null && ingredient.DefaultPrice.HasValue)
+                {
+                    totalCost += ingredient.DefaultPrice.Value * item.Quantity;
+                }
+            }
+
+            txtTotalCost.Text = $"{totalCost:F2} ₽";
+
+            int portions = int.TryParse(txtYieldPortions.Text, out var p) ? p : 0;
+            if (portions > 0)
+            {
+                decimal costPerPortion = totalCost / portions;
+                txtCostPerPortion.Text = $"{costPerPortion:F2} ₽";
+            }
+            else
+            {
+                txtCostPerPortion.Text = "—";
+            }
         }
     }
 

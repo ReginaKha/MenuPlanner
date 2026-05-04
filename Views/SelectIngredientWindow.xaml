@@ -43,7 +43,7 @@
                 <TextBox x:Name="txtQuantity" Width="100" Height="35" 
                          PreviewTextInput="TxtNumber_PreviewTextInput"/>
                 <TextBlock Text="Ед. измерения:" VerticalAlignment="Center" Margin="10,0,10,0"/>
-                <TextBox x:Name="txtUnit" Width="100" Height="35" IsReadOnly="True"/>
+                <TextBox x:Name="txtUnit" Width="100" Height="35"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
