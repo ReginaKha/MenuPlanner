@@ -87,9 +87,14 @@ namespace MenuPlanner.Views
                 quantity = 1; // Значение по умолчанию
             }
 
+            // Если ед. измерения не указана, используем значение из ингредиента
+            string unit = string.IsNullOrWhiteSpace(txtUnit.Text) 
+                ? ingredient.Unit 
+                : txtUnit.Text;
+
             SelectedIngredient = ingredient;
             SelectedQuantity = quantity;
-            SelectedUnit = txtUnit.Text;
+            SelectedUnit = unit;
             DialogResult = true;
         }
 
