@@ -16,17 +16,15 @@ namespace MenuPlanner.Model
     {
         public Suppliers()
         {
-            this.InventoryBatches = new HashSet<InventoryBatches>();
-            this.PriceHistory = new HashSet<PriceHistory>();
+            this.Ingredients = new HashSet<Ingredients>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ContactPhone { get; set; }
-        public string Email { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public string ContactPerson { get; set; }
+        public string Phone { get; set; }
+        public bool IsActive { get; set; }
     
-        public virtual ICollection<InventoryBatches> InventoryBatches { get; set; }
-        public virtual ICollection<PriceHistory> PriceHistory { get; set; }
+        public virtual ICollection<Ingredients> Ingredients { get; set; }
     }
 }

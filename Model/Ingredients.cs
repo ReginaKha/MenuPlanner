@@ -16,24 +16,28 @@ namespace MenuPlanner.Model
     {
         public Ingredients()
         {
-            this.InventoryBatches = new HashSet<InventoryBatches>();
+            this.Inventory = new HashSet<Inventory>();
             this.PriceHistory = new HashSet<PriceHistory>();
-            this.PurchaseRequests = new HashSet<PurchaseRequests>();
             this.RecipeIngredients = new HashSet<RecipeIngredients>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Unit { get; set; }
+        public int CategoryId { get; set; }
+        public int UnitId { get; set; }
+        public Nullable<int> SupplierId { get; set; }
+        public decimal CurrentPrice { get; set; }
+        public Nullable<System.DateTime> LastPriceUpdate { get; set; }
         public Nullable<int> ShelfLifeDays { get; set; }
-        public Nullable<decimal> DefaultPrice { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<int> CategoryId { get; set; }
+        public string StorageCondition { get; set; }
+        public bool IsActive { get; set; }
+        public System.DateTime CreatedAt { get; set; }
     
         public virtual Categories Categories { get; set; }
-        public virtual ICollection<InventoryBatches> InventoryBatches { get; set; }
+        public virtual Suppliers Suppliers { get; set; }
+        public virtual Units Units { get; set; }
+        public virtual ICollection<Inventory> Inventory { get; set; }
         public virtual ICollection<PriceHistory> PriceHistory { get; set; }
-        public virtual ICollection<PurchaseRequests> PurchaseRequests { get; set; }
         public virtual ICollection<RecipeIngredients> RecipeIngredients { get; set; }
     }
 }

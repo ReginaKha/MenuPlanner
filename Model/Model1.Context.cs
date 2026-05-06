@@ -28,20 +28,17 @@ namespace MenuPlanner.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<AuditLogs> AuditLogs { get; set; }
         public DbSet<Categories> Categories { get; set; }
         public DbSet<Ingredients> Ingredients { get; set; }
-        public DbSet<InventoryBatches> InventoryBatches { get; set; }
-        public DbSet<MenuItems> MenuItems { get; set; }
-        public DbSet<Menus> Menus { get; set; }
+        public DbSet<Inventory> Inventory { get; set; }
         public DbSet<PriceHistory> PriceHistory { get; set; }
-        public DbSet<PurchaseRequests> PurchaseRequests { get; set; }
         public DbSet<RecipeIngredients> RecipeIngredients { get; set; }
         public DbSet<Recipes> Recipes { get; set; }
         public DbSet<Roles> Roles { get; set; }
-        public DbSet<Sales> Sales { get; set; }
+        public DbSet<SalesStats> SalesStats { get; set; }
         public DbSet<Suppliers> Suppliers { get; set; }
         public DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public DbSet<Units> Units { get; set; }
         public DbSet<Users> Users { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

@@ -12,18 +12,16 @@ namespace MenuPlanner.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class PurchaseRequests
+    public partial class Inventory
     {
         public int Id { get; set; }
-        public Nullable<int> IngredientId { get; set; }
-        public decimal RequestedQty { get; set; }
-        public string Status { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<int> ApprovedBy { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public int IngredientId { get; set; }
+        public decimal Quantity { get; set; }
+        public string BatchNumber { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public System.DateTime LastCheckDate { get; set; }
     
         public virtual Ingredients Ingredients { get; set; }
-        public virtual Users Users { get; set; }
-        public virtual Users Users1 { get; set; }
     }
 }
