@@ -28,7 +28,7 @@ namespace MenuPlanner.Views
             cmbCategory.SelectedValuePath = "Id";
 
             // Загружаем статусы
-            cmbStatus.SelectedIndex = 0;
+            cmbStatus.Visibility = System.Windows.Visibility.Collapsed;
 
             if (_editingRecipe != null)
             {
@@ -45,28 +45,6 @@ namespace MenuPlanner.Views
                 if (_editingRecipe.CategoryId.HasValue)
                 {
                     cmbCategory.SelectedValue = _editingRecipe.CategoryId.Value;
-                }
-                else if (!string.IsNullOrEmpty(_editingRecipe.Category))
-                {
-                    // Fallback: поиск категории по имени если CategoryId не заполнен
-                    var categoryByName = categories.FirstOrDefault(c => c.Name == _editingRecipe.Category);
-                    if (categoryByName != null)
-                    {
-                        cmbCategory.SelectedItem = categoryByName;
-                    }
-                }
-
-                // Устанавливаем статус
-                if (!string.IsNullOrEmpty(_editingRecipe.Status))
-                {
-                    foreach (ComboBoxItem item in cmbStatus.Items)
-                    {
-                        if (item.Content.ToString() == _editingRecipe.Status)
-                        {
-                            item.IsSelected = true;
-                            break;
-                        }
-                    }
                 }
 
                 // Загружаем ингредиенты рецепта
@@ -228,10 +206,6 @@ namespace MenuPlanner.Views
                 
                 var selectedCategory = cmbCategory.SelectedItem as Categories;
                 _editingRecipe.CategoryId = selectedCategory?.Id;
-                _editingRecipe.Category = selectedCategory?.Name;
-                
-                var selectedStatus = (cmbStatus.SelectedItem as ComboBoxItem)?.Content.ToString();
-                _editingRecipe.Status = selectedStatus;
                 
                 _editingRecipe.UpdatedAt = DateTime.Now;
 

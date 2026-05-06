@@ -50,19 +50,13 @@ namespace MenuPlanner.Views.Pages
         private void LoadCategories()
         {
             cmbCategory.Items.Clear();
-            cmbCategory.Items.Add(new ComboBoxItem { Content = "Все категории", Tag = (string)null });
+            cmbCategory.Items.Add(new ComboBoxItem { Content = "Все категории", Tag = (int?)null });
 
-            // Получаем уникальные категории из рецептов
-            var categories = _allRecipes
-                .Where(r => !string.IsNullOrEmpty(r.Category))
-                .Select(r => r.Category)
-                .Distinct()
-                .OrderBy(c => c)
-                .ToList();
-
+            // Загружаем категории из справочника
+            var categories = _context.Categories.OrderBy(c => c.Name).ToList();
             foreach (var cat in categories)
             {
-                cmbCategory.Items.Add(new ComboBoxItem { Content = cat, Tag = cat });
+                cmbCategory.Items.Add(new ComboBoxItem { Content = cat.Name, Tag = cat.Id });
             }
             cmbCategory.SelectedIndex = 0;
         }
@@ -142,10 +136,10 @@ namespace MenuPlanner.Views.Pages
                 }
 
                 // Получаем выбранную категорию
-                string selectedCategory = null;
-                if (cmbCategory != null && cmbCategory.SelectedItem is ComboBoxItem catItem && catItem.Tag is string catTag)
+                int? selectedCategoryId = null;
+                if (cmbCategory != null && cmbCategory.SelectedItem is ComboBoxItem catItem && catItem.Tag is int catTag)
                 {
-                    selectedCategory = catTag;
+                    selectedCategoryId = catTag;
                 }
 
                 // Получаем выбранный статус
@@ -181,17 +175,26 @@ namespace MenuPlanner.Views.Pages
 
                     // Проверка по категории
                     bool matchCat = true;
-                    if (selectedCategory != null)
+                    if (selectedCategoryId.HasValue)
                     {
-                        matchCat = recipe.Category == selectedCategory;
+                        if (!recipe.CategoryId.HasValue)
+                        {
+                            matchCat = false;
+                        }
+                        else
+                        {
+                            matchCat = recipe.CategoryId.Value == selectedCategoryId.Value;
+                        }
                     }
 
-                    // Проверка по статусу
+                    // Проверка по статусу (закомментировано, т.к. поле Status удалено из модели)
                     bool matchStatus = true;
+                    /*
                     if (selectedStatus != null)
                     {
                         matchStatus = recipe.Status == selectedStatus;
                     }
+                    */
 
                     if (matchName && matchCat && matchStatus)
                     {
