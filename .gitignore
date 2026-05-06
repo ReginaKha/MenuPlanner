@@ -1,33 +1,66 @@
-```
-# Build artifacts
-*.o
-*.obj
-*.exe
-*.dll
-*.so
-*.a
-*.out
+```csharp
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
 
-# Dependencies
-node_modules/
-venv/
-.venv/
-__pycache__/
-.mypy_cache/
-.pytest_cache/
-target/
-.gradle/
-
-# IDE files
+# Visual Studio files
+*.user
+*.userosscache
+*.suo
+*.csproj.user
+*.vbproj.user
+*.vcxproj.user
+.vs/
 .vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
 
-# System files
+# ComPlus generated files
+Generated\ Files/
+
+# NuGet Packages
+*.nupkg
+!src/**/packages.config
+
+# Microsoft Fakes
+Fakes/
+
+# Visual Studio cache/options
+*.[Cc]ache
+*.VC.db
+*.VC.VC.opendb
+
+# Build results
+*.[Cc]onfiguration
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.ipdb
+*.pdb
+*.i
+*.pyc
+*.pyo
+*.npy
+*.so
+
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+desktop.ini
+
+# Environment specific files
 .env
 .env.local
 *.env.*
@@ -35,32 +68,89 @@ Thumbs.db
 # Logs
 *.log
 
-# Coverage
+# Coverage reports
 coverage/
+*.coverage
+*.cover
+coverage.xml
 htmlcov/
-.coverage
+.nyc_output/
+istanbul/
+.lcov*
 
-# Compressed files
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
-*.lz4
-*.lzh
-*.cab
-*.arj
-*.rpm
-*.deb
-*.Z
-*.lz
-*.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
+# Temporary folders
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Package manager folders
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+jspm/
+jspm_packages/
+jam/
+jamjs/
+bower_components/
+.npm
+.npmrc
+.bower-cache
+.bower-registry
+.bower-tmp
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+.recommenders
+
+# C#
+*.sln.docstates
+*.userprefs
+[._]*.userprefs
+project.lock.json
+
+# Web
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.sass-cache/
+connect.lock
+gulp-cache/
+jspm_packages/
+node_modules/
+.travis.yml
+typings/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
 ```

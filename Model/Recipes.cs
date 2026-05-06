@@ -37,14 +37,18 @@ namespace MenuPlanner.Model
         public string RecipeNumber { get; set; }
         public string Source { get; set; }
         public int BaseServings { get; set; }
-        public decimal YieldWeight { get; set; }
+        public Nullable<decimal> YieldWeight { get; set; }
         public string Technology { get; set; }
-        public decimal MarkupPercent { get; set; }
+        public Nullable<decimal> MarkupPercent { get; set; }
         public bool IsActive { get; set; }
+        
+        // Внешний ключ на категорию
+        public Nullable<int> CategoryId { get; set; }
 
         public virtual ICollection<MenuItems> MenuItems { get; set; }
         public virtual ICollection<RecipeIngredients> RecipeIngredients { get; set; }
         public virtual Users Users { get; set; }
         public virtual ICollection<Sales> Sales { get; set; }
+        public virtual Categories Categories { get; set; }
     }
 }

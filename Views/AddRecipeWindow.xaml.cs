@@ -34,19 +34,17 @@ namespace MenuPlanner.Views
             {
                 Title = "Редактирование рецепта";
                 txtName.Text = _editingRecipe.Name;
-                txtRecipeNumber.Text = _editingRecipe.RecipeNumber;
-                txtSource.Text = _editingRecipe.Source;
-                txtYieldWeight.Text = _editingRecipe.YieldWeight.ToString("F2");
+                txtRecipeNumber.Text = _editingRecipe.RecipeNumber ?? string.Empty;
+                txtSource.Text = _editingRecipe.Source ?? string.Empty;
+                txtYieldWeight.Text = _editingRecipe.YieldWeight.HasValue ? _editingRecipe.YieldWeight.Value.ToString("F2") : "0.00";
                 txtBaseServings.Text = _editingRecipe.BaseServings.ToString();
-                txtTechnology.Text = _editingRecipe.Technology;
-                txtMarkupPercent.Text = _editingRecipe.MarkupPercent.ToString("F2");
+                txtTechnology.Text = _editingRecipe.Technology ?? string.Empty;
+                txtMarkupPercent.Text = _editingRecipe.MarkupPercent.HasValue ? _editingRecipe.MarkupPercent.Value.ToString("F2") : "0.00";
 
-                // Устанавливаем категорию
-                if (!string.IsNullOrEmpty(_editingRecipe.Category))
+                // Устанавливаем категорию по ID
+                if (_editingRecipe.CategoryId.HasValue)
                 {
-                    var cat = categories.FirstOrDefault(c => c.Name == _editingRecipe.Category);
-                    if (cat != null)
-                        cmbCategory.SelectedValue = cat.Id;
+                    cmbCategory.SelectedValue = _editingRecipe.CategoryId.Value;
                 }
 
                 // Устанавливаем статус
@@ -68,6 +66,13 @@ namespace MenuPlanner.Views
                 // Обновляем расчет стоимости
                 CalculateCost();
             }
+            else
+            {
+                // Значения по умолчанию для нового рецепта
+                txtBaseServings.Text = "1";
+                txtMarkupPercent.Text = "30.00";
+                txtYieldWeight.Text = "0.00";
+            }
         }
 
         private void LoadRecipeIngredients()
@@ -86,7 +91,8 @@ namespace MenuPlanner.Views
                     var ingredient = ri.Ingredients;
                     decimal pricePerUnit = ingredient?.DefaultPrice ?? 0;
                     decimal grossWeight = ri.GrossWeight > 0 ? ri.GrossWeight : ri.Quantity;
-                    decimal totalCost = grossWeight * pricePerUnit;
+                    // Цена рассчитывается за грамм (если цена за кг, то делим на 1000)
+                    decimal totalCost = grossWeight * pricePerUnit / 1000;
 
                     _recipeIngredients.Add(new RecipeIngredientItem
                     {
@@ -206,12 +212,13 @@ namespace MenuPlanner.Views
                 _editingRecipe.Name = txtName.Text.Trim();
                 _editingRecipe.RecipeNumber = txtRecipeNumber.Text?.Trim();
                 _editingRecipe.Source = txtSource.Text?.Trim();
-                _editingRecipe.YieldWeight = decimal.TryParse(txtYieldWeight.Text, out var yieldWeight) ? yieldWeight : 0;
+                _editingRecipe.YieldWeight = decimal.TryParse(txtYieldWeight.Text, out var yieldWeight) ? yieldWeight : (decimal?)null;
                 _editingRecipe.BaseServings = int.TryParse(txtBaseServings.Text, out var baseServings) ? baseServings : 1;
                 _editingRecipe.Technology = txtTechnology.Text?.Trim();
-                _editingRecipe.MarkupPercent = decimal.TryParse(txtMarkupPercent.Text, out var markup) ? markup : 0;
+                _editingRecipe.MarkupPercent = decimal.TryParse(txtMarkupPercent.Text, out var markup) ? markup : (decimal?)null;
                 
                 var selectedCategory = cmbCategory.SelectedItem as Categories;
+                _editingRecipe.CategoryId = selectedCategory?.Id;
                 _editingRecipe.Category = selectedCategory?.Name;
                 
                 var selectedStatus = (cmbStatus.SelectedItem as ComboBoxItem)?.Content.ToString();
@@ -267,9 +274,12 @@ namespace MenuPlanner.Views
         {
             decimal totalCost = 0;
 
-            foreach (var item in _recipeIngredients)
+            if (_recipeIngredients != null)
             {
-                totalCost += item.TotalCost;
+                foreach (var item in _recipeIngredients)
+                {
+                    totalCost += item.TotalCost;
+                }
             }
 
             txtTotalCost.Text = $"{totalCost:F2} ₽";
