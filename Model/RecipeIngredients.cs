@@ -19,7 +19,12 @@ namespace MenuPlanner.Model
         public Nullable<int> IngredientId { get; set; }
         public decimal Quantity { get; set; }
         public string Unit { get; set; }
-    
+        
+        // Новые поля из ТЗ
+        public decimal GrossWeight { get; set; }
+        public decimal NetWeight { get; set; }
+        public int SortOrder { get; set; }
+
         public virtual Ingredients Ingredients { get; set; }
         public virtual Recipes Recipes { get; set; }
     }
