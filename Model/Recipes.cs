@@ -19,8 +19,11 @@ namespace MenuPlanner.Model
             this.MenuItems = new HashSet<MenuItems>();
             this.RecipeIngredients = new HashSet<RecipeIngredients>();
             this.Sales = new HashSet<Sales>();
+            this.MarkupPercent = 0;
+            this.IsActive = true;
+            this.BaseServings = 1;
         }
-    
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
@@ -29,7 +32,16 @@ namespace MenuPlanner.Model
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<System.DateTime> UpdatedAt { get; set; }
-    
+        
+        // Новые поля из ТЗ
+        public string RecipeNumber { get; set; }
+        public string Source { get; set; }
+        public int BaseServings { get; set; }
+        public decimal YieldWeight { get; set; }
+        public string Technology { get; set; }
+        public decimal MarkupPercent { get; set; }
+        public bool IsActive { get; set; }
+
         public virtual ICollection<MenuItems> MenuItems { get; set; }
         public virtual ICollection<RecipeIngredients> RecipeIngredients { get; set; }
         public virtual Users Users { get; set; }
