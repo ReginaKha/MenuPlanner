@@ -26,9 +26,6 @@ namespace MenuPlanner.Model
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
-        public Nullable<int> YieldPortions { get; set; }
-        public string Status { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<System.DateTime> UpdatedAt { get; set; }
