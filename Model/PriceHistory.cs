@@ -15,14 +15,13 @@ namespace MenuPlanner.Model
     public partial class PriceHistory
     {
         public int Id { get; set; }
-        public Nullable<int> IngredientId { get; set; }
-        public Nullable<int> SupplierId { get; set; }
-        public decimal PricePerUnit { get; set; }
-        public System.DateTime ValidFrom { get; set; }
-        public Nullable<System.DateTime> ValidTo { get; set; }
-        public Nullable<bool> IsSeasonal { get; set; }
+        public int IngredientId { get; set; }
+        public decimal OldPrice { get; set; }
+        public decimal NewPrice { get; set; }
+        public System.DateTime ChangedAt { get; set; }
+        public Nullable<int> ChangedByUserId { get; set; }
     
         public virtual Ingredients Ingredients { get; set; }
-        public virtual Suppliers Suppliers { get; set; }
+        public virtual Users Users { get; set; }
     }
 }
