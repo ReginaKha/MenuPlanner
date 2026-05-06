@@ -13,7 +13,8 @@ namespace MenuPlanner.Views
         private readonly MenuPlannerEntities _context;
         private List<Ingredients> _allIngredients = new List<Ingredients>();
         public Ingredients SelectedIngredient { get; private set; }
-        public decimal SelectedQuantity { get; private set; }
+        public decimal SelectedGrossWeight { get; private set; }
+        public decimal SelectedNetWeight { get; private set; }
         public string SelectedUnit { get; private set; }
 
         public SelectIngredientWindow(MenuPlannerEntities context)
@@ -53,9 +54,10 @@ namespace MenuPlanner.Views
             }
         }
 
-        private void TxtNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void TxtDecimal_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = !decimal.TryParse(e.Text, out _);
+            // Для десятичных чисел разрешаем цифры, точку и запятую
+            e.Handled = !decimal.TryParse(e.Text, out _) && e.Text != "." && e.Text != ",";
         }
 
         private void DgIngredients_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -81,10 +83,24 @@ namespace MenuPlanner.Views
 
         private void SelectIngredient(Ingredients ingredient)
         {
-            // Получаем количество
-            if (!decimal.TryParse(txtQuantity.Text, out var quantity) || quantity <= 0)
+            // Получаем вес брутто
+            if (!decimal.TryParse(txtGrossWeight.Text, out var grossWeight) || grossWeight <= 0)
             {
-                quantity = 1; // Значение по умолчанию
+                grossWeight = 100; // Значение по умолчанию 100г
+            }
+
+            // Получаем вес нетто
+            if (!decimal.TryParse(txtNetWeight.Text, out var netWeight) || netWeight <= 0)
+            {
+                netWeight = grossWeight; // По умолчанию нетто = брутто
+            }
+
+            // Валидация: нетто не может быть больше брутто
+            if (netWeight > grossWeight)
+            {
+                MessageBox.Show("Вес нетто не может быть больше веса брутто!", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
 
             // Если ед. измерения не указана, используем значение из ингредиента
@@ -93,7 +109,8 @@ namespace MenuPlanner.Views
                 : txtUnit.Text;
 
             SelectedIngredient = ingredient;
-            SelectedQuantity = quantity;
+            SelectedGrossWeight = grossWeight;
+            SelectedNetWeight = netWeight;
             SelectedUnit = unit;
             DialogResult = true;
         }
