@@ -32,19 +32,14 @@ namespace MenuPlanner.Model
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<System.DateTime> UpdatedAt { get; set; }
-        
-        // Новые поля из ТЗ
+        public Nullable<decimal> MarkupPercent { get; set; }
         public string RecipeNumber { get; set; }
         public string Source { get; set; }
         public int BaseServings { get; set; }
         public Nullable<decimal> YieldWeight { get; set; }
         public string Technology { get; set; }
-        public Nullable<decimal> MarkupPercent { get; set; }
         public bool IsActive { get; set; }
-        
-        // Внешний ключ на категорию
-        public Nullable<int> CategoryId { get; set; }
-
+    
         public virtual ICollection<MenuItems> MenuItems { get; set; }
         public virtual ICollection<RecipeIngredients> RecipeIngredients { get; set; }
         public virtual Users Users { get; set; }
