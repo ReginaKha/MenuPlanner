@@ -47,9 +47,7 @@
                   BorderThickness="1"
                   GridLinesVisibility="None"
                   HeadersVisibility="Column"
-                  RowHeight="35"
-                  VirtualizingPanel.IsVirtualizing="False"
-                  ScrollViewer.CanContentScroll="False">
+                  RowHeight="35">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>

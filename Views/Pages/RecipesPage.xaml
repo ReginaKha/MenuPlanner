@@ -8,7 +8,70 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="RecipesPage">
 
-    <Grid>
-        
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок и кнопка -->
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Рецепты" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Grid.Column="1" Content="+ Добавить" Width="120" Height="35"
+                    Background="#FF6D00" Foreground="White" BorderThickness="0"
+                    Click="BtnAdd_Click"/>
+        </Grid>
+
+        <!-- Фильтры -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox x:Name="txtSearch" Width="300" Height="35" Margin="0,0,10,0"
+                     VerticalContentAlignment="Center" Tag="Поиск..."
+                     TextChanged="txtSearch_TextChanged"/>
+            <ComboBox x:Name="cmbCategory" Width="200" Height="35"
+                      VerticalContentAlignment="Center"
+                      SelectionChanged="cmbCategory_SelectionChanged">
+                <ComboBoxItem Content="Все категории" IsSelected="True"/>
+            </ComboBox>
+            <ComboBox x:Name="cmbStatus" Width="150" Height="35" Margin="10,0,0,0"
+                      VerticalContentAlignment="Center"
+                      SelectionChanged="cmbStatus_SelectionChanged">
+                <ComboBoxItem Content="Все статусы" IsSelected="True"/>
+                <ComboBoxItem Content="Активен"/>
+                <ComboBoxItem Content="Архив"/>
+                <ComboBoxItem Content="Черновик"/>
+            </ComboBox>
+            <Button Content="Сброс" Width="80" Height="35" Margin="10,0,0,0"
+                    Click="BtnReset_Click"/>
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="dgRecipes" 
+                  Grid.Row="2"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  Background="White"
+                  BorderBrush="Gray"
+                  BorderThickness="1"
+                  GridLinesVisibility="None"
+                  HeadersVisibility="Column"
+                  RowHeight="35"
+                  MouseDoubleClick="DgRecipes_MouseDoubleClick"
+                  PreviewKeyDown="DgRecipes_PreviewKeyDown">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Name}" Width="200"/>
+                <DataGridTextColumn Header="Категория" Binding="{Binding Category}" Width="150"/>
+                <DataGridTextColumn Header="Порции" Binding="{Binding YieldPortions}" Width="80"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
+                <DataGridTextColumn Header="Обновлено" Binding="{Binding UpdatedAt, StringFormat={}{0:dd.MM.yyyy}}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>
