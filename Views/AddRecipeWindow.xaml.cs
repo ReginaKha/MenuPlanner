@@ -34,7 +34,12 @@ namespace MenuPlanner.Views
             {
                 Title = "Редактирование рецепта";
                 txtName.Text = _editingRecipe.Name;
-                txtYieldPortions.Text = _editingRecipe.YieldPortions?.ToString();
+                txtRecipeNumber.Text = _editingRecipe.RecipeNumber;
+                txtSource.Text = _editingRecipe.Source;
+                txtYieldWeight.Text = _editingRecipe.YieldWeight.ToString("F2");
+                txtBaseServings.Text = _editingRecipe.BaseServings.ToString();
+                txtTechnology.Text = _editingRecipe.Technology;
+                txtMarkupPercent.Text = _editingRecipe.MarkupPercent.ToString("F2");
 
                 // Устанавливаем категорию
                 if (!string.IsNullOrEmpty(_editingRecipe.Category))
@@ -59,6 +64,9 @@ namespace MenuPlanner.Views
 
                 // Загружаем ингредиенты рецепта
                 LoadRecipeIngredients();
+                
+                // Обновляем расчет стоимости
+                CalculateCost();
             }
         }
 
@@ -75,12 +83,20 @@ namespace MenuPlanner.Views
 
                 foreach (var ri in recipeIngredients)
                 {
+                    var ingredient = ri.Ingredients;
+                    decimal pricePerUnit = ingredient?.DefaultPrice ?? 0;
+                    decimal grossWeight = ri.GrossWeight > 0 ? ri.GrossWeight : ri.Quantity;
+                    decimal totalCost = grossWeight * pricePerUnit;
+
                     _recipeIngredients.Add(new RecipeIngredientItem
                     {
                         IngredientId = ri.IngredientId ?? 0,
-                        IngredientName = ri.Ingredients?.Name ?? "Неизвестно",
-                        Quantity = ri.Quantity,
-                        Unit = ri.Unit,
+                        IngredientName = ingredient?.Name ?? "Неизвестно",
+                        GrossWeight = grossWeight,
+                        NetWeight = ri.NetWeight,
+                        Unit = ri.Unit ?? ingredient?.Unit ?? "шт",
+                        PricePerUnit = pricePerUnit,
+                        TotalCost = totalCost,
                         RecipeIngredientId = ri.Id
                     });
                 }
@@ -88,23 +104,21 @@ namespace MenuPlanner.Views
 
             dgRecipeIngredients.ItemsSource = null;
             dgRecipeIngredients.ItemsSource = _recipeIngredients;
-            
-            // Обновляем расчет стоимости
-            CalculateCost();
         }
 
         private void TxtNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Разрешаем ввод только цифр для поля порций
-            if (sender == txtYieldPortions)
+            // Разрешаем ввод только цифр для полей целых чисел
+            if (sender == txtBaseServings)
             {
                 e.Handled = !int.TryParse(e.Text, out _);
             }
-            // Для поля количества разрешаем цифры и точку/запятую
-            else if (sender is TextBox tb && tb.Name == "txtQuantity")
-            {
-                e.Handled = !decimal.TryParse(e.Text, out _) && e.Text != "." && e.Text != ",";
-            }
+        }
+
+        private void TxtDecimal_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Для десятичных чисел разрешаем цифры, точку и запятую
+            e.Handled = !decimal.TryParse(e.Text, out _) && e.Text != "." && e.Text != ",";
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e) => DialogResult = false;
@@ -115,7 +129,8 @@ namespace MenuPlanner.Views
             if (dialog.ShowDialog() == true)
             {
                 var selectedIngredient = dialog.SelectedIngredient;
-                var quantity = dialog.SelectedQuantity;
+                var grossWeight = dialog.SelectedGrossWeight;
+                var netWeight = dialog.SelectedNetWeight;
                 var unit = dialog.SelectedUnit;
 
                 // Проверяем, не добавлен ли уже этот ингредиент
@@ -127,12 +142,20 @@ namespace MenuPlanner.Views
                     return;
                 }
 
+                decimal pricePerUnit = selectedIngredient.DefaultPrice ?? 0;
+                // Цена рассчитывается за грамм (если цена за кг, то делим на 1000)
+                // Для простоты считаем что цена в БД указана за ту же единицу, что и вес в граммах
+                decimal totalCost = grossWeight * pricePerUnit / 1000;
+
                 _recipeIngredients.Add(new RecipeIngredientItem
                 {
                     IngredientId = selectedIngredient.Id,
                     IngredientName = selectedIngredient.Name,
-                    Quantity = quantity,
-                    Unit = unit ?? selectedIngredient.Unit
+                    GrossWeight = grossWeight,
+                    NetWeight = netWeight,
+                    Unit = unit ?? selectedIngredient.Unit ?? "шт",
+                    PricePerUnit = pricePerUnit,
+                    TotalCost = totalCost
                 });
 
                 dgRecipeIngredients.ItemsSource = null;
@@ -181,11 +204,15 @@ namespace MenuPlanner.Views
                 }
 
                 _editingRecipe.Name = txtName.Text.Trim();
+                _editingRecipe.RecipeNumber = txtRecipeNumber.Text?.Trim();
+                _editingRecipe.Source = txtSource.Text?.Trim();
+                _editingRecipe.YieldWeight = decimal.TryParse(txtYieldWeight.Text, out var yieldWeight) ? yieldWeight : 0;
+                _editingRecipe.BaseServings = int.TryParse(txtBaseServings.Text, out var baseServings) ? baseServings : 1;
+                _editingRecipe.Technology = txtTechnology.Text?.Trim();
+                _editingRecipe.MarkupPercent = decimal.TryParse(txtMarkupPercent.Text, out var markup) ? markup : 0;
                 
                 var selectedCategory = cmbCategory.SelectedItem as Categories;
                 _editingRecipe.Category = selectedCategory?.Name;
-                
-                _editingRecipe.YieldPortions = int.TryParse(txtYieldPortions.Text, out var portions) ? portions : (int?)null;
                 
                 var selectedStatus = (cmbStatus.SelectedItem as ComboBoxItem)?.Content.ToString();
                 _editingRecipe.Status = selectedStatus;
@@ -219,14 +246,17 @@ namespace MenuPlanner.Views
             }
 
             // Добавляем новые
+            int sortOrder = 0;
             foreach (var item in _recipeIngredients)
             {
                 _context.RecipeIngredients.Add(new RecipeIngredients
                 {
                     RecipeId = _editingRecipe.Id,
                     IngredientId = item.IngredientId,
-                    Quantity = item.Quantity,
-                    Unit = item.Unit
+                    GrossWeight = item.GrossWeight,
+                    NetWeight = item.NetWeight,
+                    Unit = item.Unit,
+                    SortOrder = sortOrder++
                 });
             }
 
@@ -239,25 +269,32 @@ namespace MenuPlanner.Views
 
             foreach (var item in _recipeIngredients)
             {
-                var ingredient = _context.Ingredients.FirstOrDefault(i => i.Id == item.IngredientId);
-                if (ingredient != null && ingredient.DefaultPrice.HasValue)
-                {
-                    totalCost += ingredient.DefaultPrice.Value * item.Quantity;
-                }
+                totalCost += item.TotalCost;
             }
 
             txtTotalCost.Text = $"{totalCost:F2} ₽";
 
-            int portions = int.TryParse(txtYieldPortions.Text, out var p) ? p : 0;
+            // Расчет цены продажи с учетом наценки
+            decimal markupPercent = decimal.TryParse(txtMarkupPercent.Text, out var mp) ? mp : 0;
+            decimal sellingPrice = totalCost * (1 + markupPercent / 100);
+            txtSellingPrice.Text = $"{sellingPrice:F2} ₽";
+
+            // Цена за порцию
+            int portions = int.TryParse(txtBaseServings.Text, out var p) ? p : 0;
             if (portions > 0)
             {
-                decimal costPerPortion = totalCost / portions;
+                decimal costPerPortion = sellingPrice / portions;
                 txtCostPerPortion.Text = $"{costPerPortion:F2} ₽";
             }
             else
             {
                 txtCostPerPortion.Text = "—";
             }
+        }
+
+        private void TxtMarkupPercent_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CalculateCost();
         }
     }
 
@@ -266,7 +303,10 @@ namespace MenuPlanner.Views
         public int RecipeIngredientId { get; set; }
         public int IngredientId { get; set; }
         public string IngredientName { get; set; }
-        public decimal Quantity { get; set; }
+        public decimal GrossWeight { get; set; }
+        public decimal NetWeight { get; set; }
         public string Unit { get; set; }
+        public decimal PricePerUnit { get; set; }
+        public decimal TotalCost { get; set; }
     }
 }
