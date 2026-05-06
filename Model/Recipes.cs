@@ -44,5 +44,6 @@ namespace MenuPlanner.Model
         public virtual ICollection<RecipeIngredients> RecipeIngredients { get; set; }
         public virtual Users Users { get; set; }
         public virtual ICollection<Sales> Sales { get; set; }
+        public virtual Categories Categories { get; set; }
     }
 }
