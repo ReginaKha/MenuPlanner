@@ -46,6 +46,15 @@ namespace MenuPlanner.Views
                 {
                     cmbCategory.SelectedValue = _editingRecipe.CategoryId.Value;
                 }
+                else if (!string.IsNullOrEmpty(_editingRecipe.Category))
+                {
+                    // Fallback: поиск категории по имени если CategoryId не заполнен
+                    var categoryByName = categories.FirstOrDefault(c => c.Name == _editingRecipe.Category);
+                    if (categoryByName != null)
+                    {
+                        cmbCategory.SelectedItem = categoryByName;
+                    }
+                }
 
                 // Устанавливаем статус
                 if (!string.IsNullOrEmpty(_editingRecipe.Status))
@@ -251,20 +260,23 @@ namespace MenuPlanner.Views
             {
                 _context.RecipeIngredients.Remove(ingredient);
             }
+            _context.SaveChanges(); // Сохраняем удаления сразу
 
             // Добавляем новые
             int sortOrder = 0;
             foreach (var item in _recipeIngredients)
             {
-                _context.RecipeIngredients.Add(new RecipeIngredients
+                var newIngredient = new RecipeIngredients
                 {
                     RecipeId = _editingRecipe.Id,
                     IngredientId = item.IngredientId,
                     GrossWeight = item.GrossWeight,
                     NetWeight = item.NetWeight,
+                    Quantity = item.GrossWeight, // Для совместимости дублируем вес в Quantity
                     Unit = item.Unit,
                     SortOrder = sortOrder++
-                });
+                };
+                _context.RecipeIngredients.Add(newIngredient);
             }
 
             _context.SaveChanges();

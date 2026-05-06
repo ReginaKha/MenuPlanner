@@ -65,18 +65,12 @@ namespace MenuPlanner.Services
                 return new LoginResult(false, "Пользователь заблокирован", null);
             }
 
-            // Проверка пароля
-            // ВАЖНО: Если вы еще не реализовали проверку с солью, используйте временную:
-            // if (user.PasswordHash != PasswordHelper.HashPassword(password, "")) 
-            // Для теста пока оставим простую проверку или вашу реализацию
-
-            // Если в БД хранятся хеши:
-            // if (!PasswordHelper.VerifyPassword(password, user.PasswordHash.Substring(0, 44), user.PasswordHash))
-            // { return new LoginResult(false, "Неверный пароль", null); }
-
-            // Для ПЕРВОГО ВХОДА (если пароли пока не хешированы или вы тестируете):
-            // if (user.PasswordHash != password && user.PasswordHash != PasswordHelper.HashPassword(password, ""))
-            //    return new LoginResult(false, "Неверный пароль", null);
+            // Проверка пароля (для тестовых данных сравниваем напрямую, для продакшена нужна соль)
+            // Если в БД хранятся хеши - используйте PasswordHelper.VerifyPassword
+            if (user.PasswordHash != password)
+            {
+                return new LoginResult(false, "Неверный пароль", null);
+            }
 
             user.LastLogin = DateTime.Now;
             _context.SaveChanges();
