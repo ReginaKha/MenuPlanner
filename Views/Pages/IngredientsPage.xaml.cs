@@ -182,7 +182,7 @@ namespace MenuPlanner.Views.Pages
                 // Отключаем виртуализацию перед установкой ItemsSource, чтобы избежать ошибок Visual
                 System.Windows.Controls.VirtualizingPanel.SetIsVirtualizing(dgIngredients, false);
                 System.Windows.Controls.ScrollViewer.SetCanContentScroll(dgIngredients, false);
-                
+
                 // Устанавливаем результат (всегда, даже если пусто)
                 dgIngredients.ItemsSource = filtered;
             }

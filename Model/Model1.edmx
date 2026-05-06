@@ -5,109 +5,65 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Хранилище MenuPlannerModel" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AuditLogs">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="ActionType" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="TableName" Type="nvarchar" MaxLength="50" />
-          <Property Name="RecordId" Type="int" />
-          <Property Name="Details" Type="nvarchar(max)" />
-          <Property Name="Timestamp" Type="datetime2" Precision="7" />
-        </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="SortOrder" Type="int" />
-          <Property Name="IsActive" Type="bit" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
         </EntityType>
         <EntityType Name="Ingredients">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="ShelfLifeDays" Type="int" />
-          <Property Name="DefaultPrice" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="CategoryId" Type="int" />
-        </EntityType>
-        <EntityType Name="InventoryBatches">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IngredientId" Type="int" />
-          <Property Name="BatchNumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="Quantity" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="ReceivedDate" Type="date" Nullable="false" />
-          <Property Name="ExpirationDate" Type="date" Nullable="false" />
-          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
           <Property Name="SupplierId" Type="int" />
-          <Property Name="CostPerUnit" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CurrentPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="LastPriceUpdate" Type="datetime" />
+          <Property Name="ShelfLifeDays" Type="int" />
+          <Property Name="StorageCondition" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="MenuItems">
+        <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MenuId" Type="int" />
-          <Property Name="RecipeId" Type="int" />
-          <Property Name="PlannedPortions" Type="int" />
-          <Property Name="SortOrder" Type="int" />
-        </EntityType>
-        <EntityType Name="Menus">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="MenuDate" Type="date" Nullable="false" />
-          <Property Name="Type" Type="nvarchar" MaxLength="30" />
-          <Property Name="Status" Type="varchar" MaxLength="20" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedAt" Type="datetime2" Precision="7" />
+          <Property Name="IngredientId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="BatchNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductionDate" Type="datetime" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="LastCheckDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="PriceHistory">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IngredientId" Type="int" />
-          <Property Name="SupplierId" Type="int" />
-          <Property Name="PricePerUnit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ValidFrom" Type="date" Nullable="false" />
-          <Property Name="ValidTo" Type="date" />
-          <Property Name="IsSeasonal" Type="bit" />
-        </EntityType>
-        <EntityType Name="PurchaseRequests">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IngredientId" Type="int" />
-          <Property Name="RequestedQty" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="Status" Type="varchar" MaxLength="20" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="ApprovedBy" Type="int" />
-          <Property Name="CreatedAt" Type="datetime2" Precision="7" />
+          <Property Name="IngredientId" Type="int" Nullable="false" />
+          <Property Name="OldPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="NewPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ChangedAt" Type="datetime" Nullable="false" />
+          <Property Name="ChangedByUserId" Type="int" />
         </EntityType>
         <EntityType Name="RecipeIngredients">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RecipeId" Type="int" />
-          <Property Name="IngredientId" Type="int" />
-          <Property Name="Quantity" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="RecipeId" Type="int" Nullable="false" />
+          <Property Name="IngredientId" Type="int" Nullable="false" />
+          <Property Name="GrossWeight" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="NetWeight" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="IsOptional" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Recipes">
           <Key>
@@ -115,12 +71,17 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="Category" Type="nvarchar" MaxLength="50" />
-          <Property Name="YieldPortions" Type="int" />
-          <Property Name="Status" Type="varchar" MaxLength="20" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedAt" Type="datetime2" Precision="7" />
-          <Property Name="UpdatedAt" Type="datetime2" Precision="7" />
+          <Property Name="RecipeNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="BaseServings" Type="int" Nullable="false" />
+          <Property Name="YieldWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Technology" Type="nvarchar(max)" />
+          <Property Name="Presentation" Type="nvarchar(max)" />
+          <Property Name="MarkupPercent" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="AuthorId" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -128,28 +89,28 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="Sales">
+        <EntityType Name="SalesStats">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RecipeId" Type="int" />
+          <Property Name="RecipeId" Type="int" Nullable="false" />
           <Property Name="SaleDate" Type="date" Nullable="false" />
           <Property Name="PortionsSold" Type="int" Nullable="false" />
-          <Property Name="Revenue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ActualCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalRevenue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CostAtMoment" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Suppliers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ContactPhone" Type="nvarchar" MaxLength="20" />
-          <Property Name="Email" Type="nvarchar" MaxLength="100" />
-          <Property Name="IsActive" Type="bit" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContactPerson" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -161,33 +122,40 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="LastLogin" Type="datetime2" Precision="7" />
-          <Property Name="CreatedAt" Type="datetime2" Precision="7" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK__AuditLogs__UserI__797309D9">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="AuditLogs" Type="Self.AuditLogs" Multiplicity="*" />
+        <Association Name="FK__Categorie__Paren__403A8C7D">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AuditLogs">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="Categories1">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Ingredien__Categ__00200768">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+        <Association Name="FK__Ingredien__Categ__47DBAE45">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
@@ -198,72 +166,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inventory__Ingre__66603565">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="0..1" />
-          <End Role="InventoryBatches" Type="Self.InventoryBatches" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ingredients">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InventoryBatches">
-              <PropertyRef Name="IngredientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Inventory__Suppl__693CA210">
+        <Association Name="FK__Ingredien__Suppl__49C3F6B7">
           <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
-          <End Role="InventoryBatches" Type="Self.InventoryBatches" Multiplicity="*" />
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Suppliers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="InventoryBatches">
+            <Dependent Role="Ingredients">
               <PropertyRef Name="SupplierId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MenuItems__MenuI__5FB337D6">
-          <End Role="Menus" Type="Self.Menus" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="MenuItems" Type="Self.MenuItems" Multiplicity="*" />
+        <Association Name="FK__Ingredien__UnitI__48CFD27E">
+          <End Role="Units" Type="Self.Units" Multiplicity="1" />
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Menus">
+            <Principal Role="Units">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="MenuItems">
-              <PropertyRef Name="MenuId" />
+            <Dependent Role="Ingredients">
+              <PropertyRef Name="UnitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__MenuItems__Recip__60A75C0F">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="0..1" />
-          <End Role="MenuItems" Type="Self.MenuItems" Multiplicity="*" />
+        <Association Name="FK__Inventory__Ingre__4F7CD00D">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Recipes">
+            <Principal Role="Ingredients">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="MenuItems">
-              <PropertyRef Name="RecipeId" />
+            <Dependent Role="Inventory">
+              <PropertyRef Name="IngredientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Menus__CreatedBy__5BE2A6F2">
+        <Association Name="FK__PriceHist__Chang__6A30C649">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="Menus" Type="Self.Menus" Multiplicity="*" />
+          <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Menus">
-              <PropertyRef Name="CreatedBy" />
+            <Dependent Role="PriceHistory">
+              <PropertyRef Name="ChangedByUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PriceHist__Ingre__48CFD27E">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__PriceHist__Ingre__68487DD7">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ingredients">
@@ -274,56 +226,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PriceHist__Suppl__49C3F6B7">
-          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
-          <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Suppliers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PriceHistory">
-              <PropertyRef Name="SupplierId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PurchaseR__Appro__6FE99F9F">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="PurchaseRequests" Type="Self.PurchaseRequests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseRequests">
-              <PropertyRef Name="ApprovedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PurchaseR__Creat__6EF57B66">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="PurchaseRequests" Type="Self.PurchaseRequests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseRequests">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PurchaseR__Ingre__6C190EBB">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="0..1" />
-          <End Role="PurchaseRequests" Type="Self.PurchaseRequests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ingredients">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseRequests">
-              <PropertyRef Name="IngredientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__RecipeIng__Ingre__5629CD9C">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="0..1" />
+        <Association Name="FK__RecipeIng__Ingre__5DCAEF64">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
           <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ingredients">
@@ -334,8 +238,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RecipeIng__Recip__5535A963">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="0..1">
+        <Association Name="FK__RecipeIng__Recip__5CD6CB2B">
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
@@ -348,7 +252,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Recipes__Created__5165187F">
+        <Association Name="FK__Recipes__AuthorI__59063A47">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Recipes" Type="Self.Recipes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -356,18 +260,30 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Recipes">
-              <PropertyRef Name="CreatedBy" />
+              <PropertyRef Name="AuthorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sales__RecipeId__73BA3083">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="0..1" />
-          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+        <Association Name="FK__Recipes__Categor__5441852A">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Recipes">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SalesStat__Recip__628FA481">
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
+          <End Role="SalesStats" Type="Self.SalesStats" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Recipes">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Sales">
+            <Dependent Role="SalesStats">
               <PropertyRef Name="RecipeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -416,84 +332,65 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Хранилище MenuPlannerModelContainer">
-          <EntitySet Name="AuditLogs" EntityType="Self.AuditLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="InventoryBatches" EntityType="Self.InventoryBatches" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MenuItems" EntityType="Self.MenuItems" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Menus" EntityType="Self.Menus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PurchaseRequests" EntityType="Self.PurchaseRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipes" EntityType="Self.Recipes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SalesStats" EntityType="Self.SalesStats" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Units" EntityType="Self.Units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__AuditLogs__UserI__797309D9" Association="Self.FK__AuditLogs__UserI__797309D9">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="AuditLogs" EntitySet="AuditLogs" />
+          <AssociationSet Name="FK__Categorie__Paren__403A8C7D" Association="Self.FK__Categorie__Paren__403A8C7D">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="FK__Ingredien__Categ__00200768" Association="Self.FK__Ingredien__Categ__00200768">
+          <AssociationSet Name="FK__Ingredien__Categ__47DBAE45" Association="Self.FK__Ingredien__Categ__47DBAE45">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inventory__Ingre__66603565" Association="Self.FK__Inventory__Ingre__66603565">
-            <End Role="Ingredients" EntitySet="Ingredients" />
-            <End Role="InventoryBatches" EntitySet="InventoryBatches" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Inventory__Suppl__693CA210" Association="Self.FK__Inventory__Suppl__693CA210">
+          <AssociationSet Name="FK__Ingredien__Suppl__49C3F6B7" Association="Self.FK__Ingredien__Suppl__49C3F6B7">
             <End Role="Suppliers" EntitySet="Suppliers" />
-            <End Role="InventoryBatches" EntitySet="InventoryBatches" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__MenuItems__MenuI__5FB337D6" Association="Self.FK__MenuItems__MenuI__5FB337D6">
-            <End Role="Menus" EntitySet="Menus" />
-            <End Role="MenuItems" EntitySet="MenuItems" />
+          <AssociationSet Name="FK__Ingredien__UnitI__48CFD27E" Association="Self.FK__Ingredien__UnitI__48CFD27E">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__MenuItems__Recip__60A75C0F" Association="Self.FK__MenuItems__Recip__60A75C0F">
-            <End Role="Recipes" EntitySet="Recipes" />
-            <End Role="MenuItems" EntitySet="MenuItems" />
+          <AssociationSet Name="FK__Inventory__Ingre__4F7CD00D" Association="Self.FK__Inventory__Ingre__4F7CD00D">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="Inventory" EntitySet="Inventory" />
           </AssociationSet>
-          <AssociationSet Name="FK__Menus__CreatedBy__5BE2A6F2" Association="Self.FK__Menus__CreatedBy__5BE2A6F2">
+          <AssociationSet Name="FK__PriceHist__Chang__6A30C649" Association="Self.FK__PriceHist__Chang__6A30C649">
             <End Role="Users" EntitySet="Users" />
-            <End Role="Menus" EntitySet="Menus" />
+            <End Role="PriceHistory" EntitySet="PriceHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK__PriceHist__Ingre__48CFD27E" Association="Self.FK__PriceHist__Ingre__48CFD27E">
+          <AssociationSet Name="FK__PriceHist__Ingre__68487DD7" Association="Self.FK__PriceHist__Ingre__68487DD7">
             <End Role="Ingredients" EntitySet="Ingredients" />
             <End Role="PriceHistory" EntitySet="PriceHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK__PriceHist__Suppl__49C3F6B7" Association="Self.FK__PriceHist__Suppl__49C3F6B7">
-            <End Role="Suppliers" EntitySet="Suppliers" />
-            <End Role="PriceHistory" EntitySet="PriceHistory" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PurchaseR__Appro__6FE99F9F" Association="Self.FK__PurchaseR__Appro__6FE99F9F">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="PurchaseRequests" EntitySet="PurchaseRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PurchaseR__Creat__6EF57B66" Association="Self.FK__PurchaseR__Creat__6EF57B66">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="PurchaseRequests" EntitySet="PurchaseRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PurchaseR__Ingre__6C190EBB" Association="Self.FK__PurchaseR__Ingre__6C190EBB">
-            <End Role="Ingredients" EntitySet="Ingredients" />
-            <End Role="PurchaseRequests" EntitySet="PurchaseRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RecipeIng__Ingre__5629CD9C" Association="Self.FK__RecipeIng__Ingre__5629CD9C">
+          <AssociationSet Name="FK__RecipeIng__Ingre__5DCAEF64" Association="Self.FK__RecipeIng__Ingre__5DCAEF64">
             <End Role="Ingredients" EntitySet="Ingredients" />
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__RecipeIng__Recip__5535A963" Association="Self.FK__RecipeIng__Recip__5535A963">
+          <AssociationSet Name="FK__RecipeIng__Recip__5CD6CB2B" Association="Self.FK__RecipeIng__Recip__5CD6CB2B">
             <End Role="Recipes" EntitySet="Recipes" />
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Recipes__Created__5165187F" Association="Self.FK__Recipes__Created__5165187F">
+          <AssociationSet Name="FK__Recipes__AuthorI__59063A47" Association="Self.FK__Recipes__AuthorI__59063A47">
             <End Role="Users" EntitySet="Users" />
             <End Role="Recipes" EntitySet="Recipes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sales__RecipeId__73BA3083" Association="Self.FK__Sales__RecipeId__73BA3083">
+          <AssociationSet Name="FK__Recipes__Categor__5441852A" Association="Self.FK__Recipes__Categor__5441852A">
+            <End Role="Categories" EntitySet="Categories" />
             <End Role="Recipes" EntitySet="Recipes" />
-            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SalesStat__Recip__628FA481" Association="Self.FK__SalesStat__Recip__628FA481">
+            <End Role="Recipes" EntitySet="Recipes" />
+            <End Role="SalesStats" EntitySet="SalesStats" />
           </AssociationSet>
           <AssociationSet Name="FK__Users__RoleId__3B75D760" Association="Self.FK__Users__RoleId__3B75D760">
             <End Role="Roles" EntitySet="Roles" />
@@ -505,129 +402,80 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MenuPlannerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AuditLogs">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="ActionType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RecordId" Type="Int32" />
-          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Timestamp" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__AuditLogs__UserI__797309D9" FromRole="AuditLogs" ToRole="Users" />
-        </EntityType>
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SortOrder" Type="Int32" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__Categ__00200768" FromRole="Categories" ToRole="Ingredients" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <NavigationProperty Name="Categories1" Relationship="Self.FK__Categorie__Paren__403A8C7D" FromRole="Categories" ToRole="Categories1" />
+          <NavigationProperty Name="Categories2" Relationship="Self.FK__Categorie__Paren__403A8C7D" FromRole="Categories1" ToRole="Categories" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__Categ__47DBAE45" FromRole="Categories" ToRole="Ingredients" />
+          <NavigationProperty Name="Recipes" Relationship="Self.FK__Recipes__Categor__5441852A" FromRole="Categories" ToRole="Recipes" />
         </EntityType>
         <EntityType Name="Ingredients">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShelfLifeDays" Type="Int32" />
-          <Property Name="DefaultPrice" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CategoryId" Type="Int32" />
-          <NavigationProperty Name="Categories" Relationship="Self.FK__Ingredien__Categ__00200768" FromRole="Ingredients" ToRole="Categories" />
-          <NavigationProperty Name="InventoryBatches" Relationship="Self.FK__Inventory__Ingre__66603565" FromRole="Ingredients" ToRole="InventoryBatches" />
-          <NavigationProperty Name="PriceHistory" Relationship="Self.FK__PriceHist__Ingre__48CFD27E" FromRole="Ingredients" ToRole="PriceHistory" />
-          <NavigationProperty Name="PurchaseRequests" Relationship="Self.FK__PurchaseR__Ingre__6C190EBB" FromRole="Ingredients" ToRole="PurchaseRequests" />
-          <NavigationProperty Name="RecipeIngredients" Relationship="Self.FK__RecipeIng__Ingre__5629CD9C" FromRole="Ingredients" ToRole="RecipeIngredients" />
-        </EntityType>
-        <EntityType Name="InventoryBatches">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IngredientId" Type="Int32" />
-          <Property Name="BatchNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="ReceivedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
           <Property Name="SupplierId" Type="Int32" />
-          <Property Name="CostPerUnit" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Inventory__Ingre__66603565" FromRole="InventoryBatches" ToRole="Ingredients" />
-          <NavigationProperty Name="Suppliers" Relationship="Self.FK__Inventory__Suppl__693CA210" FromRole="InventoryBatches" ToRole="Suppliers" />
+          <Property Name="CurrentPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="LastPriceUpdate" Type="DateTime" Precision="3" />
+          <Property Name="ShelfLifeDays" Type="Int32" />
+          <Property Name="StorageCondition" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK__Ingredien__Categ__47DBAE45" FromRole="Ingredients" ToRole="Categories" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK__Ingredien__Suppl__49C3F6B7" FromRole="Ingredients" ToRole="Suppliers" />
+          <NavigationProperty Name="Units" Relationship="Self.FK__Ingredien__UnitI__48CFD27E" FromRole="Ingredients" ToRole="Units" />
+          <NavigationProperty Name="Inventory" Relationship="Self.FK__Inventory__Ingre__4F7CD00D" FromRole="Ingredients" ToRole="Inventory" />
+          <NavigationProperty Name="PriceHistory" Relationship="Self.FK__PriceHist__Ingre__68487DD7" FromRole="Ingredients" ToRole="PriceHistory" />
+          <NavigationProperty Name="RecipeIngredients" Relationship="Self.FK__RecipeIng__Ingre__5DCAEF64" FromRole="Ingredients" ToRole="RecipeIngredients" />
         </EntityType>
-        <EntityType Name="MenuItems">
+        <EntityType Name="Inventory">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MenuId" Type="Int32" />
-          <Property Name="RecipeId" Type="Int32" />
-          <Property Name="PlannedPortions" Type="Int32" />
-          <Property Name="SortOrder" Type="Int32" />
-          <NavigationProperty Name="Menus" Relationship="Self.FK__MenuItems__MenuI__5FB337D6" FromRole="MenuItems" ToRole="Menus" />
-          <NavigationProperty Name="Recipes" Relationship="Self.FK__MenuItems__Recip__60A75C0F" FromRole="MenuItems" ToRole="Recipes" />
-        </EntityType>
-        <EntityType Name="Menus">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MenuDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Type" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="MenuItems" Relationship="Self.FK__MenuItems__MenuI__5FB337D6" FromRole="Menus" ToRole="MenuItems" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Menus__CreatedBy__5BE2A6F2" FromRole="Menus" ToRole="Users" />
+          <Property Name="IngredientId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="BatchNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductionDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
+          <Property Name="LastCheckDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Inventory__Ingre__4F7CD00D" FromRole="Inventory" ToRole="Ingredients" />
         </EntityType>
         <EntityType Name="PriceHistory">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IngredientId" Type="Int32" />
-          <Property Name="SupplierId" Type="Int32" />
-          <Property Name="PricePerUnit" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ValidFrom" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ValidTo" Type="DateTime" Precision="0" />
-          <Property Name="IsSeasonal" Type="Boolean" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.FK__PriceHist__Ingre__48CFD27E" FromRole="PriceHistory" ToRole="Ingredients" />
-          <NavigationProperty Name="Suppliers" Relationship="Self.FK__PriceHist__Suppl__49C3F6B7" FromRole="PriceHistory" ToRole="Suppliers" />
-        </EntityType>
-        <EntityType Name="PurchaseRequests">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IngredientId" Type="Int32" />
-          <Property Name="RequestedQty" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="ApprovedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.FK__PurchaseR__Ingre__6C190EBB" FromRole="PurchaseRequests" ToRole="Ingredients" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__PurchaseR__Appro__6FE99F9F" FromRole="PurchaseRequests" ToRole="Users" />
-          <NavigationProperty Name="Users1" Relationship="Self.FK__PurchaseR__Creat__6EF57B66" FromRole="PurchaseRequests" ToRole="Users" />
+          <Property Name="IngredientId" Type="Int32" Nullable="false" />
+          <Property Name="OldPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="NewPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ChangedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ChangedByUserId" Type="Int32" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__PriceHist__Ingre__68487DD7" FromRole="PriceHistory" ToRole="Ingredients" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__PriceHist__Chang__6A30C649" FromRole="PriceHistory" ToRole="Users" />
         </EntityType>
         <EntityType Name="RecipeIngredients">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RecipeId" Type="Int32" />
-          <Property Name="IngredientId" Type="Int32" />
-          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="Unit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.FK__RecipeIng__Ingre__5629CD9C" FromRole="RecipeIngredients" ToRole="Ingredients" />
-          <NavigationProperty Name="Recipes" Relationship="Self.FK__RecipeIng__Recip__5535A963" FromRole="RecipeIngredients" ToRole="Recipes" />
+          <Property Name="RecipeId" Type="Int32" Nullable="false" />
+          <Property Name="IngredientId" Type="Int32" Nullable="false" />
+          <Property Name="GrossWeight" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="NetWeight" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="IsOptional" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__RecipeIng__Ingre__5DCAEF64" FromRole="RecipeIngredients" ToRole="Ingredients" />
+          <NavigationProperty Name="Recipes" Relationship="Self.FK__RecipeIng__Recip__5CD6CB2B" FromRole="RecipeIngredients" ToRole="Recipes" />
         </EntityType>
         <EntityType Name="Recipes">
           <Key>
@@ -635,16 +483,21 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="YieldPortions" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="7" />
-          <Property Name="UpdatedAt" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="MenuItems" Relationship="Self.FK__MenuItems__Recip__60A75C0F" FromRole="Recipes" ToRole="MenuItems" />
-          <NavigationProperty Name="RecipeIngredients" Relationship="Self.FK__RecipeIng__Recip__5535A963" FromRole="Recipes" ToRole="RecipeIngredients" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Recipes__Created__5165187F" FromRole="Recipes" ToRole="Users" />
-          <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__RecipeId__73BA3083" FromRole="Recipes" ToRole="Sales" />
+          <Property Name="RecipeNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="BaseServings" Type="Int32" Nullable="false" />
+          <Property Name="YieldWeight" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Technology" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Presentation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MarkupPercent" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="AuthorId" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK__Recipes__Categor__5441852A" FromRole="Recipes" ToRole="Categories" />
+          <NavigationProperty Name="RecipeIngredients" Relationship="Self.FK__RecipeIng__Recip__5CD6CB2B" FromRole="Recipes" ToRole="RecipeIngredients" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Recipes__AuthorI__59063A47" FromRole="Recipes" ToRole="Users" />
+          <NavigationProperty Name="SalesStats" Relationship="Self.FK__SalesStat__Recip__628FA481" FromRole="Recipes" ToRole="SalesStats" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -652,32 +505,31 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Users__RoleId__3B75D760" FromRole="Roles" ToRole="Users" />
         </EntityType>
-        <EntityType Name="Sales">
+        <EntityType Name="SalesStats">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RecipeId" Type="Int32" />
+          <Property Name="RecipeId" Type="Int32" Nullable="false" />
           <Property Name="SaleDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="PortionsSold" Type="Int32" Nullable="false" />
-          <Property Name="Revenue" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="ActualCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Recipes" Relationship="Self.FK__Sales__RecipeId__73BA3083" FromRole="Sales" ToRole="Recipes" />
+          <Property Name="TotalRevenue" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CostAtMoment" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Recipes" Relationship="Self.FK__SalesStat__Recip__628FA481" FromRole="SalesStats" ToRole="Recipes" />
         </EntityType>
         <EntityType Name="Suppliers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <NavigationProperty Name="InventoryBatches" Relationship="Self.FK__Inventory__Suppl__693CA210" FromRole="Suppliers" ToRole="InventoryBatches" />
-          <NavigationProperty Name="PriceHistory" Relationship="Self.FK__PriceHist__Suppl__49C3F6B7" FromRole="Suppliers" ToRole="PriceHistory" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContactPerson" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__Suppl__49C3F6B7" FromRole="Suppliers" ToRole="Ingredients" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -689,39 +541,44 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="Units">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShortName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.FK__Ingredien__UnitI__48CFD27E" FromRole="Units" ToRole="Ingredients" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="LastLogin" Type="DateTime" Precision="7" />
-          <Property Name="CreatedAt" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="AuditLogs" Relationship="Self.FK__AuditLogs__UserI__797309D9" FromRole="Users" ToRole="AuditLogs" />
-          <NavigationProperty Name="Menus" Relationship="Self.FK__Menus__CreatedBy__5BE2A6F2" FromRole="Users" ToRole="Menus" />
-          <NavigationProperty Name="PurchaseRequests" Relationship="Self.FK__PurchaseR__Appro__6FE99F9F" FromRole="Users" ToRole="PurchaseRequests" />
-          <NavigationProperty Name="PurchaseRequests1" Relationship="Self.FK__PurchaseR__Creat__6EF57B66" FromRole="Users" ToRole="PurchaseRequests" />
-          <NavigationProperty Name="Recipes" Relationship="Self.FK__Recipes__Created__5165187F" FromRole="Users" ToRole="Recipes" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PriceHistory" Relationship="Self.FK__PriceHist__Chang__6A30C649" FromRole="Users" ToRole="PriceHistory" />
+          <NavigationProperty Name="Recipes" Relationship="Self.FK__Recipes__AuthorI__59063A47" FromRole="Users" ToRole="Recipes" />
           <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RoleId__3B75D760" FromRole="Users" ToRole="Roles" />
         </EntityType>
-        <Association Name="FK__AuditLogs__UserI__797309D9">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="AuditLogs" Type="Self.AuditLogs" Multiplicity="*" />
+        <Association Name="FK__Categorie__Paren__403A8C7D">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="Categories">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="AuditLogs">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="Categories1">
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Ingredien__Categ__00200768">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+        <Association Name="FK__Ingredien__Categ__47DBAE45">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
           <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
@@ -732,22 +589,56 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inventory__Ingre__66603565">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="0..1" />
-          <End Role="InventoryBatches" Type="Self.InventoryBatches" Multiplicity="*" />
+        <Association Name="FK__Recipes__Categor__5441852A">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Recipes">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ingredien__Suppl__49C3F6B7">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ingredients">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ingredien__UnitI__48CFD27E">
+          <End Role="Units" Type="Self.Units" Multiplicity="1" />
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Ingredients">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__Ingre__4F7CD00D">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ingredients">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="InventoryBatches">
+            <Dependent Role="Inventory">
               <PropertyRef Name="IngredientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PriceHist__Ingre__48CFD27E">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+        <Association Name="FK__PriceHist__Ingre__68487DD7">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ingredients">
@@ -758,20 +649,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PurchaseR__Ingre__6C190EBB">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="0..1" />
-          <End Role="PurchaseRequests" Type="Self.PurchaseRequests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ingredients">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseRequests">
-              <PropertyRef Name="IngredientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__RecipeIng__Ingre__5629CD9C">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="0..1" />
+        <Association Name="FK__RecipeIng__Ingre__5DCAEF64">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
           <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ingredients">
@@ -782,94 +661,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Inventory__Suppl__693CA210">
-          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
-          <End Role="InventoryBatches" Type="Self.InventoryBatches" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Suppliers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="InventoryBatches">
-              <PropertyRef Name="SupplierId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__MenuItems__MenuI__5FB337D6">
-          <End Role="Menus" Type="Self.Menus" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="MenuItems" Type="Self.MenuItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menus">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MenuItems">
-              <PropertyRef Name="MenuId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__MenuItems__Recip__60A75C0F">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="0..1" />
-          <End Role="MenuItems" Type="Self.MenuItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Recipes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="MenuItems">
-              <PropertyRef Name="RecipeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Menus__CreatedBy__5BE2A6F2">
+        <Association Name="FK__PriceHist__Chang__6A30C649">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="Menus" Type="Self.Menus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Menus">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PriceHist__Suppl__49C3F6B7">
-          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="0..1" />
           <End Role="PriceHistory" Type="Self.PriceHistory" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Suppliers">
+            <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="PriceHistory">
-              <PropertyRef Name="SupplierId" />
+              <PropertyRef Name="ChangedByUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PurchaseR__Appro__6FE99F9F">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="PurchaseRequests" Type="Self.PurchaseRequests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseRequests">
-              <PropertyRef Name="ApprovedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PurchaseR__Creat__6EF57B66">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="PurchaseRequests" Type="Self.PurchaseRequests" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PurchaseRequests">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__RecipeIng__Recip__5535A963">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="0..1">
+        <Association Name="FK__RecipeIng__Recip__5CD6CB2B">
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
@@ -882,7 +687,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Recipes__Created__5165187F">
+        <Association Name="FK__Recipes__AuthorI__59063A47">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Recipes" Type="Self.Recipes" Multiplicity="*" />
           <ReferentialConstraint>
@@ -890,18 +695,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Recipes">
-              <PropertyRef Name="CreatedBy" />
+              <PropertyRef Name="AuthorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sales__RecipeId__73BA3083">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="0..1" />
-          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+        <Association Name="FK__SalesStat__Recip__628FA481">
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
+          <End Role="SalesStats" Type="Self.SalesStats" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Recipes">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Sales">
+            <Dependent Role="SalesStats">
               <PropertyRef Name="RecipeId" />
             </Dependent>
           </ReferentialConstraint>
@@ -919,84 +724,65 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MenuPlannerEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AuditLogs" EntityType="Self.AuditLogs" />
           <EntitySet Name="Categories" EntityType="Self.Categories" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" />
-          <EntitySet Name="InventoryBatches" EntityType="Self.InventoryBatches" />
-          <EntitySet Name="MenuItems" EntityType="Self.MenuItems" />
-          <EntitySet Name="Menus" EntityType="Self.Menus" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" />
           <EntitySet Name="PriceHistory" EntityType="Self.PriceHistory" />
-          <EntitySet Name="PurchaseRequests" EntityType="Self.PurchaseRequests" />
           <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" />
           <EntitySet Name="Recipes" EntityType="Self.Recipes" />
           <EntitySet Name="Roles" EntityType="Self.Roles" />
-          <EntitySet Name="Sales" EntityType="Self.Sales" />
+          <EntitySet Name="SalesStats" EntityType="Self.SalesStats" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Units" EntityType="Self.Units" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK__AuditLogs__UserI__797309D9" Association="Self.FK__AuditLogs__UserI__797309D9">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="AuditLogs" EntitySet="AuditLogs" />
+          <AssociationSet Name="FK__Categorie__Paren__403A8C7D" Association="Self.FK__Categorie__Paren__403A8C7D">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Categories1" EntitySet="Categories" />
           </AssociationSet>
-          <AssociationSet Name="FK__Ingredien__Categ__00200768" Association="Self.FK__Ingredien__Categ__00200768">
+          <AssociationSet Name="FK__Ingredien__Categ__47DBAE45" Association="Self.FK__Ingredien__Categ__47DBAE45">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inventory__Ingre__66603565" Association="Self.FK__Inventory__Ingre__66603565">
-            <End Role="Ingredients" EntitySet="Ingredients" />
-            <End Role="InventoryBatches" EntitySet="InventoryBatches" />
+          <AssociationSet Name="FK__Recipes__Categor__5441852A" Association="Self.FK__Recipes__Categor__5441852A">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Recipes" EntitySet="Recipes" />
           </AssociationSet>
-          <AssociationSet Name="FK__PriceHist__Ingre__48CFD27E" Association="Self.FK__PriceHist__Ingre__48CFD27E">
+          <AssociationSet Name="FK__Ingredien__Suppl__49C3F6B7" Association="Self.FK__Ingredien__Suppl__49C3F6B7">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ingredien__UnitI__48CFD27E" Association="Self.FK__Ingredien__UnitI__48CFD27E">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__Ingre__4F7CD00D" Association="Self.FK__Inventory__Ingre__4F7CD00D">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PriceHist__Ingre__68487DD7" Association="Self.FK__PriceHist__Ingre__68487DD7">
             <End Role="Ingredients" EntitySet="Ingredients" />
             <End Role="PriceHistory" EntitySet="PriceHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK__PurchaseR__Ingre__6C190EBB" Association="Self.FK__PurchaseR__Ingre__6C190EBB">
-            <End Role="Ingredients" EntitySet="Ingredients" />
-            <End Role="PurchaseRequests" EntitySet="PurchaseRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RecipeIng__Ingre__5629CD9C" Association="Self.FK__RecipeIng__Ingre__5629CD9C">
+          <AssociationSet Name="FK__RecipeIng__Ingre__5DCAEF64" Association="Self.FK__RecipeIng__Ingre__5DCAEF64">
             <End Role="Ingredients" EntitySet="Ingredients" />
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Inventory__Suppl__693CA210" Association="Self.FK__Inventory__Suppl__693CA210">
-            <End Role="Suppliers" EntitySet="Suppliers" />
-            <End Role="InventoryBatches" EntitySet="InventoryBatches" />
-          </AssociationSet>
-          <AssociationSet Name="FK__MenuItems__MenuI__5FB337D6" Association="Self.FK__MenuItems__MenuI__5FB337D6">
-            <End Role="Menus" EntitySet="Menus" />
-            <End Role="MenuItems" EntitySet="MenuItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK__MenuItems__Recip__60A75C0F" Association="Self.FK__MenuItems__Recip__60A75C0F">
-            <End Role="Recipes" EntitySet="Recipes" />
-            <End Role="MenuItems" EntitySet="MenuItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Menus__CreatedBy__5BE2A6F2" Association="Self.FK__Menus__CreatedBy__5BE2A6F2">
+          <AssociationSet Name="FK__PriceHist__Chang__6A30C649" Association="Self.FK__PriceHist__Chang__6A30C649">
             <End Role="Users" EntitySet="Users" />
-            <End Role="Menus" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PriceHist__Suppl__49C3F6B7" Association="Self.FK__PriceHist__Suppl__49C3F6B7">
-            <End Role="Suppliers" EntitySet="Suppliers" />
             <End Role="PriceHistory" EntitySet="PriceHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK__PurchaseR__Appro__6FE99F9F" Association="Self.FK__PurchaseR__Appro__6FE99F9F">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="PurchaseRequests" EntitySet="PurchaseRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PurchaseR__Creat__6EF57B66" Association="Self.FK__PurchaseR__Creat__6EF57B66">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="PurchaseRequests" EntitySet="PurchaseRequests" />
-          </AssociationSet>
-          <AssociationSet Name="FK__RecipeIng__Recip__5535A963" Association="Self.FK__RecipeIng__Recip__5535A963">
+          <AssociationSet Name="FK__RecipeIng__Recip__5CD6CB2B" Association="Self.FK__RecipeIng__Recip__5CD6CB2B">
             <End Role="Recipes" EntitySet="Recipes" />
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
           </AssociationSet>
-          <AssociationSet Name="FK__Recipes__Created__5165187F" Association="Self.FK__Recipes__Created__5165187F">
+          <AssociationSet Name="FK__Recipes__AuthorI__59063A47" Association="Self.FK__Recipes__AuthorI__59063A47">
             <End Role="Users" EntitySet="Users" />
             <End Role="Recipes" EntitySet="Recipes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sales__RecipeId__73BA3083" Association="Self.FK__Sales__RecipeId__73BA3083">
+          <AssociationSet Name="FK__SalesStat__Recip__628FA481" Association="Self.FK__SalesStat__Recip__628FA481">
             <End Role="Recipes" EntitySet="Recipes" />
-            <End Role="Sales" EntitySet="Sales" />
+            <End Role="SalesStats" EntitySet="SalesStats" />
           </AssociationSet>
           <AssociationSet Name="FK__Users__RoleId__3B75D760" Association="Self.FK__Users__RoleId__3B75D760">
             <End Role="Roles" EntitySet="Roles" />
@@ -1050,27 +836,13 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище MenuPlannerModelContainer" CdmEntityContainer="MenuPlannerEntities">
-          <EntitySetMapping Name="AuditLogs">
-            <EntityTypeMapping TypeName="MenuPlannerModel.AuditLogs">
-              <MappingFragment StoreEntitySet="AuditLogs">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ActionType" ColumnName="ActionType" />
-                <ScalarProperty Name="TableName" ColumnName="TableName" />
-                <ScalarProperty Name="RecordId" ColumnName="RecordId" />
-                <ScalarProperty Name="Details" ColumnName="Details" />
-                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="MenuPlannerModel.Categories">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1079,50 +851,28 @@
               <MappingFragment StoreEntitySet="Ingredients">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="ShelfLifeDays" ColumnName="ShelfLifeDays" />
-                <ScalarProperty Name="DefaultPrice" ColumnName="DefaultPrice" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+                <ScalarProperty Name="LastPriceUpdate" ColumnName="LastPriceUpdate" />
+                <ScalarProperty Name="ShelfLifeDays" ColumnName="ShelfLifeDays" />
+                <ScalarProperty Name="StorageCondition" ColumnName="StorageCondition" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="InventoryBatches">
-            <EntityTypeMapping TypeName="MenuPlannerModel.InventoryBatches">
-              <MappingFragment StoreEntitySet="InventoryBatches">
+          <EntitySetMapping Name="Inventory">
+            <EntityTypeMapping TypeName="MenuPlannerModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
-                <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ReceivedDate" ColumnName="ReceivedDate" />
+                <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="CostPerUnit" ColumnName="CostPerUnit" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MenuItems">
-            <EntityTypeMapping TypeName="MenuPlannerModel.MenuItems">
-              <MappingFragment StoreEntitySet="MenuItems">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-                <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
-                <ScalarProperty Name="PlannedPortions" ColumnName="PlannedPortions" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="MenuPlannerModel.Menus">
-              <MappingFragment StoreEntitySet="Menus">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="MenuDate" ColumnName="MenuDate" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="LastCheckDate" ColumnName="LastCheckDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1131,24 +881,10 @@
               <MappingFragment StoreEntitySet="PriceHistory">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="PricePerUnit" ColumnName="PricePerUnit" />
-                <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
-                <ScalarProperty Name="ValidTo" ColumnName="ValidTo" />
-                <ScalarProperty Name="IsSeasonal" ColumnName="IsSeasonal" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseRequests">
-            <EntityTypeMapping TypeName="MenuPlannerModel.PurchaseRequests">
-              <MappingFragment StoreEntitySet="PurchaseRequests">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
-                <ScalarProperty Name="RequestedQty" ColumnName="RequestedQty" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="OldPrice" ColumnName="OldPrice" />
+                <ScalarProperty Name="NewPrice" ColumnName="NewPrice" />
+                <ScalarProperty Name="ChangedAt" ColumnName="ChangedAt" />
+                <ScalarProperty Name="ChangedByUserId" ColumnName="ChangedByUserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1158,8 +894,10 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
                 <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="IsOptional" ColumnName="IsOptional" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1168,10 +906,15 @@
               <MappingFragment StoreEntitySet="Recipes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="YieldPortions" ColumnName="YieldPortions" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RecipeNumber" ColumnName="RecipeNumber" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="BaseServings" ColumnName="BaseServings" />
+                <ScalarProperty Name="YieldWeight" ColumnName="YieldWeight" />
+                <ScalarProperty Name="Technology" ColumnName="Technology" />
+                <ScalarProperty Name="Presentation" ColumnName="Presentation" />
+                <ScalarProperty Name="MarkupPercent" ColumnName="MarkupPercent" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
               </MappingFragment>
@@ -1186,15 +929,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sales">
-            <EntityTypeMapping TypeName="MenuPlannerModel.Sales">
-              <MappingFragment StoreEntitySet="Sales">
+          <EntitySetMapping Name="SalesStats">
+            <EntityTypeMapping TypeName="MenuPlannerModel.SalesStats">
+              <MappingFragment StoreEntitySet="SalesStats">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RecipeId" ColumnName="RecipeId" />
                 <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
                 <ScalarProperty Name="PortionsSold" ColumnName="PortionsSold" />
-                <ScalarProperty Name="Revenue" ColumnName="Revenue" />
-                <ScalarProperty Name="ActualCost" ColumnName="ActualCost" />
+                <ScalarProperty Name="TotalRevenue" ColumnName="TotalRevenue" />
+                <ScalarProperty Name="CostAtMoment" ColumnName="CostAtMoment" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1203,8 +946,8 @@
               <MappingFragment StoreEntitySet="Suppliers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactPerson" ColumnName="ContactPerson" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1220,16 +963,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="MenuPlannerModel.Units">
+              <MappingFragment StoreEntitySet="Units">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="MenuPlannerModel.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
               </MappingFragment>
             </EntityTypeMapping>

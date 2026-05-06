@@ -15,16 +15,13 @@ namespace MenuPlanner.Model
     public partial class RecipeIngredients
     {
         public int Id { get; set; }
-        public Nullable<int> RecipeId { get; set; }
-        public Nullable<int> IngredientId { get; set; }
-        public decimal Quantity { get; set; }
-        public string Unit { get; set; }
-        
-        // Новые поля из ТЗ
+        public int RecipeId { get; set; }
+        public int IngredientId { get; set; }
         public decimal GrossWeight { get; set; }
         public decimal NetWeight { get; set; }
         public int SortOrder { get; set; }
-
+        public bool IsOptional { get; set; }
+    
         public virtual Ingredients Ingredients { get; set; }
         public virtual Recipes Recipes { get; set; }
     }

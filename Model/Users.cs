@@ -16,26 +16,19 @@ namespace MenuPlanner.Model
     {
         public Users()
         {
-            this.AuditLogs = new HashSet<AuditLogs>();
-            this.Menus = new HashSet<Menus>();
-            this.PurchaseRequests = new HashSet<PurchaseRequests>();
-            this.PurchaseRequests1 = new HashSet<PurchaseRequests>();
+            this.PriceHistory = new HashSet<PriceHistory>();
             this.Recipes = new HashSet<Recipes>();
         }
     
         public int Id { get; set; }
-        public string Login { get; set; }
+        public string Username { get; set; }
         public string PasswordHash { get; set; }
         public string FullName { get; set; }
         public int RoleId { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<System.DateTime> LastLogin { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public bool IsActive { get; set; }
+        public System.DateTime CreatedAt { get; set; }
     
-        public virtual ICollection<AuditLogs> AuditLogs { get; set; }
-        public virtual ICollection<Menus> Menus { get; set; }
-        public virtual ICollection<PurchaseRequests> PurchaseRequests { get; set; }
-        public virtual ICollection<PurchaseRequests> PurchaseRequests1 { get; set; }
+        public virtual ICollection<PriceHistory> PriceHistory { get; set; }
         public virtual ICollection<Recipes> Recipes { get; set; }
         public virtual Roles Roles { get; set; }
     }
