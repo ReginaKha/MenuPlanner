@@ -38,7 +38,7 @@ namespace MenuPlanner.Views
 
             txtUserName.Text = _currentUser.FullName;
 
-            // ⚠️ Навигационное свойство — "role" (singular, lowercase)
+            // Навигационное свойство — "Roles" (множественное число, как в модели)
             txtUserRole.Text = _currentUser.Roles?.Name ?? "Пользователь";
 
             var roleName = _currentUser.Roles?.Name;
@@ -50,8 +50,8 @@ namespace MenuPlanner.Views
             btnAnalytics.Visibility = Visibility.Visible;
             btnUsers.Visibility = Visibility.Visible;
 
-            // Ограничения по ролям
-            if (roleName == "Cook")
+            // Ограничения по ролям (используем русские названия из БД)
+            if (roleName == "Калькулятор")
             {
                 btnMenu.Visibility = Visibility.Collapsed;
                 btnInventory.Visibility = Visibility.Collapsed;
@@ -59,18 +59,23 @@ namespace MenuPlanner.Views
                 btnAnalytics.Visibility = Visibility.Collapsed;
                 btnUsers.Visibility = Visibility.Collapsed;
             }
-            else if (roleName == "Storekeeper")
+            else if (roleName == "Кладовщик")
             {
                 btnMenu.Visibility = Visibility.Collapsed;
                 btnAnalytics.Visibility = Visibility.Collapsed;
                 btnUsers.Visibility = Visibility.Collapsed;
             }
-            else if (roleName == "Accountant")
+            else if (roleName == "Бухгалтер")
             {
                 btnMenu.Visibility = Visibility.Collapsed;
                 btnInventory.Visibility = Visibility.Collapsed;
                 btnUsers.Visibility = Visibility.Collapsed;
             }
+            else if (roleName == "Шеф-повар")
+            {
+                btnUsers.Visibility = Visibility.Collapsed;
+            }
+            // Администратор видит всё
         }
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)

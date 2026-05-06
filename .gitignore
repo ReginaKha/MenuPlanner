@@ -6,10 +6,8 @@
 [Rr]eleases/
 x64/
 x86/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
+[Dd]epends/
+intermediatelog.txt
 
 # Visual Studio files
 *.user
@@ -17,140 +15,90 @@ bld/
 *.suo
 *.csproj.user
 *.vbproj.user
-*.vcxproj.user
-.vs/
+*.fsproj.user
+*.userprefs
+
+# Visual Studio Code files
 .vscode/
 
-# ComPlus generated files
-Generated\ Files/
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
 
-# NuGet Packages
-*.nupkg
-!src/**/packages.config
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
 
-# Microsoft Fakes
-Fakes/
+# Build results of an ATL project
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
 
-# Visual Studio cache/options
-*.[Cc]ache
-*.VC.db
-*.VC.VC.opendb
+# Benchmark Results
+BenchmarkDotNet.Artifacts/
 
-# Build results
-*.[Cc]onfiguration
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
 *.ilk
 *.meta
 *.obj
 *.iobj
-*.ipdb
+*.pch
 *.pdb
-*.i
-*.pyc
-*.pyo
-*.npy
-*.so
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
 
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
+# Chutzpah Test files
+_Chutzpah*
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# Windows Thumbnails
 Thumbs.db
-desktop.ini
+ehthumbs.db
+Desktop.ini
 
-# Environment specific files
+# Mac
+.DS_Store
+
+# Environment specific settings
 .env
 .env.local
-*.env.*
-
-# Logs
-*.log
-
-# Coverage reports
-coverage/
-*.coverage
-*.cover
-coverage.xml
-htmlcov/
-.nyc_output/
-istanbul/
-.lcov*
-
-# Temporary folders
-tmp/
-temp/
-*.tmp
-*.temp
-
-# Package manager folders
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-jspm/
-jspm_packages/
-jam/
-jamjs/
-bower_components/
-.npm
-.npmrc
-.bower-cache
-.bower-registry
-.bower-tmp
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Java
-*.class
-*.jar
-*.war
-*.ear
-hs_err_pid*
-.recommenders
-
-# C#
-*.sln.docstates
-*.userprefs
-[._]*.userprefs
-project.lock.json
-
-# Web
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.sass-cache/
-connect.lock
-gulp-cache/
-jspm_packages/
-node_modules/
-.travis.yml
-typings/
-
-# IDE
-.idea/
-*.swp
-*.swo
-*~
+*.env*
 ```
