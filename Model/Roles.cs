@@ -24,10 +24,5 @@ namespace MenuPlanner.Model
         public string Description { get; set; }
     
         public virtual ICollection<Users> Users { get; set; }
-        // Этот метод переопределяет отображение объекта в текстовом виде
-        public override string ToString()
-        {
-            return this.Name;
-        }
     }
 }

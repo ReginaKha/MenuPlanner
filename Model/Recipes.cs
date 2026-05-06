@@ -16,36 +16,25 @@ namespace MenuPlanner.Model
     {
         public Recipes()
         {
-            this.MenuItems = new HashSet<MenuItems>();
             this.RecipeIngredients = new HashSet<RecipeIngredients>();
-            this.Sales = new HashSet<Sales>();
-            this.MarkupPercent = 0;
-            this.IsActive = true;
-            this.BaseServings = 1;
+            this.SalesStats = new HashSet<SalesStats>();
         }
-
+    
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Category { get; set; }
-        public Nullable<int> YieldPortions { get; set; }
-        public string Status { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
-        public Nullable<System.DateTime> UpdatedAt { get; set; }
-        
-        // Новые поля из ТЗ
         public string RecipeNumber { get; set; }
-        public string Source { get; set; }
+        public int CategoryId { get; set; }
         public int BaseServings { get; set; }
-        public Nullable<decimal> YieldWeight { get; set; }
+        public decimal YieldWeight { get; set; }
         public string Technology { get; set; }
-        public Nullable<decimal> MarkupPercent { get; set; }
+        public string Presentation { get; set; }
+        public decimal MarkupPercent { get; set; }
         public bool IsActive { get; set; }
-        
-        // Внешний ключ на категорию
-        public Nullable<int> CategoryId { get; set; }
-
-        public virtual ICollection<MenuItems> MenuItems { get; set; }
+        public Nullable<int> AuthorId { get; set; }
+        public System.DateTime CreatedAt { get; set; }
+        public Nullable<System.DateTime> UpdatedAt { get; set; }
+    
+        public virtual Categories Categories { get; set; }
         public virtual ICollection<RecipeIngredients> RecipeIngredients { get; set; }
         public virtual Users Users { get; set; }
         public virtual ICollection<Sales> Sales { get; set; }

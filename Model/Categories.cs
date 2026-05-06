@@ -16,15 +16,19 @@ namespace MenuPlanner.Model
     {
         public Categories()
         {
+            this.Categories1 = new HashSet<Categories>();
             this.Ingredients = new HashSet<Ingredients>();
+            this.Recipes = new HashSet<Recipes>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> SortOrder { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public string Type { get; set; }
+        public Nullable<int> ParentId { get; set; }
     
+        public virtual ICollection<Categories> Categories1 { get; set; }
+        public virtual Categories Categories2 { get; set; }
         public virtual ICollection<Ingredients> Ingredients { get; set; }
+        public virtual ICollection<Recipes> Recipes { get; set; }
     }
 }
