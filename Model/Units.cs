@@ -12,15 +12,17 @@ namespace MenuPlanner.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class MenuItems
+    public partial class Units
     {
-        public int Id { get; set; }
-        public Nullable<int> MenuId { get; set; }
-        public Nullable<int> RecipeId { get; set; }
-        public Nullable<int> PlannedPortions { get; set; }
-        public Nullable<int> SortOrder { get; set; }
+        public Units()
+        {
+            this.Ingredients = new HashSet<Ingredients>();
+        }
     
-        public virtual Menus Menus { get; set; }
-        public virtual Recipes Recipes { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string ShortName { get; set; }
+    
+        public virtual ICollection<Ingredients> Ingredients { get; set; }
     }
 }
